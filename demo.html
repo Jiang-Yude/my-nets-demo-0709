@@ -243,7 +243,7 @@ function drawRadar(){
   var svg=document.getElementById('radar');
   if(svg.dataset.done)return; svg.dataset.done=1;
   var cx=170,cy=170,R=130;
-  var vals=[61,37.99,48,38.26,62,45.21,66,44.83]; // N ne E es S st T te
+  var vals=[61,54.5,48,55,62,64,66,63.5]; // N ne E es S st T te（中點＝相鄰兩型平均，Vincent 2026-07-09 指示）
   var labels=["N","","E","","S","","T",""];
   var colors={0:"#FF8A65",2:"#FFD54F",4:"#A5D6A7",6:"#81D4FA"};
   var ns="http://www.w3.org/2000/svg";
