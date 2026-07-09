@@ -265,8 +265,11 @@ function drawRadar(){
     line.setAttribute("stroke","#5D3A2A");line.setAttribute("stroke-width",0.7);
     svg.appendChild(line);
   }
-  // polygon
-  var d="";for(var i=0;i<8;i++){var p=pt(i,R*vals[i]/100);d+=(i?"L":"M")+p[0]+","+p[1];}d+="Z";
+  // polygon（中點＝相鄰兩角點連線的正中間）
+  var pts=[];
+  for(var i=0;i<8;i+=2){pts[i]=pt(i,R*vals[i]/100);}
+  for(var i=1;i<8;i+=2){var pa=pts[i-1],pb=pts[(i+1)%8];pts[i]=[(pa[0]+pb[0])/2,(pa[1]+pb[1])/2];}
+  var d="";for(var i=0;i<8;i++){d+=(i?"L":"M")+pts[i][0]+","+pts[i][1];}d+="Z";
   var poly=document.createElementNS(ns,"path");
   poly.setAttribute("d",d);poly.setAttribute("fill","rgba(230,184,125,0.25)");
   poly.setAttribute("stroke","#E6B87D");poly.setAttribute("stroke-width",2.5);

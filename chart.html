@@ -163,9 +163,20 @@ function pt(angDeg, v){ // v: 0-100，方形環刻度
   var r=v/100*B;
   return [CX+r*c, CY-r*s];
 }
+// 中點規則（幾何版）：ne/es/st/te 的「點位置」＝相鄰兩角點連線的正中間，
+// 保證中點永遠落在兩角連線上（數值仍是兩型平均，hover 顯示計算式）。
+function polyPtsOf(vals){
+  var P={};
+  P.N=pt(135,vals.N);P.E=pt(45,vals.E);P.S=pt(-45,vals.S);P.T=pt(-135,vals.T);
+  P.ne=[(P.N[0]+P.E[0])/2,(P.N[1]+P.E[1])/2];
+  P.es=[(P.E[0]+P.S[0])/2,(P.E[1]+P.S[1])/2];
+  P.st=[(P.S[0]+P.T[0])/2,(P.S[1]+P.T[1])/2];
+  P.te=[(P.T[0]+P.N[0])/2,(P.T[1]+P.N[1])/2];
+  return ORDER.map(function(k){return P[k];});
+}
 function polyPath(vals){
-  var d="";
-  for(var i=0;i<8;i++){var p=pt(ANG[i],vals[ORDER[i]]);d+=(i?"L":"M")+p[0].toFixed(1)+","+p[1].toFixed(1);}
+  var pts=polyPtsOf(vals),d="";
+  for(var i=0;i<8;i++){d+=(i?"L":"M")+pts[i][0].toFixed(1)+","+pts[i][1].toFixed(1);}
   return d+"Z";
 }
 var NS="http://www.w3.org/2000/svg";
@@ -286,8 +297,9 @@ function drawData(svg,animateFrom){
   var slf=el(gSelf,"path",{d:polyPath(SELF),fill:"rgba(46,95,163,0.10)",stroke:"#2E5FA3","stroke-width":2.5,"stroke-linejoin":"round","stroke-dasharray":"none"});
   hook(gSelf,"self");
   // 頂點與數字
+  var PS=polyPtsOf(SOCIAL),PF=polyPtsOf(SELF);
   ORDER.forEach(function(k,i){
-    var p=pt(ANG[i],SOCIAL[k]);
+    var p=PS[i];
     var isMain=(k===k.toUpperCase());
     var dot=el(gSoc,"circle",{cx:p[0],cy:p[1],r:isMain?7:4.5,fill:isMain?COLORS[k]:"#E8821E",stroke:"#fff","stroke-width":1.5});
     hook(dot,k);
@@ -299,7 +311,7 @@ function drawData(svg,animateFrom){
       var lb2=el(gSoc,"text",{x:p[0],y:p[1]-9,"text-anchor":"middle","font-size":11,fill:"#b06a18"},k+" "+SOCIAL[k].toFixed(1));
       hook(lb2,k);
     }
-    var p2=pt(ANG[i],SELF[k]);
+    var p2=PF[i];
     var dot2=el(gSelf,"circle",{cx:p2[0],cy:p2[1],r:isMain?5:3.5,fill:"#2E5FA3",stroke:"#fff","stroke-width":1.2});
     hook(dot2,isMain?"self":k);
     if(isMain){
@@ -392,10 +404,16 @@ function radiiNow(ts){
   return withMids(base);
 }
 function ringPts(vals,cx,cy,R,breath){
-  return ORDER.map(function(k){
-    var a=ANGR[k], r=vals[k]/100*R*(breath||1);
-    return [cx+r*Math.cos(a), cy-r*Math.sin(a)];
+  var b=breath||1,P={};
+  ["N","E","S","T"].forEach(function(k){
+    var a=ANGR[k], r=vals[k]/100*R*b;
+    P[k]=[cx+r*Math.cos(a), cy-r*Math.sin(a)];
   });
+  P.ne=[(P.N[0]+P.E[0])/2,(P.N[1]+P.E[1])/2];
+  P.es=[(P.E[0]+P.S[0])/2,(P.E[1]+P.S[1])/2];
+  P.st=[(P.S[0]+P.T[0])/2,(P.S[1]+P.T[1])/2];
+  P.te=[(P.T[0]+P.N[0])/2,(P.T[1]+P.N[1])/2];
+  return ORDER.map(function(k){return P[k];});
 }
 function spline(pts){ // 封閉平滑曲線（Catmull-Rom 轉 Bezier）
   var p=new Path2D(),n=pts.length;

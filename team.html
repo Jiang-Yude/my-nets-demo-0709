@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<title>NETS 團隊互動模擬（Demo）</title>
+<style>
+:root{
+  --bg:#352118; --text:#FFF8DC; --accent:#E6B87D; --accent-light:#D4A574;
+  --card:#4A2C1F; --subtle:#5D3A2A; --muted:#A08060;
+  --paper:#FAF7EE;
+  --cN:#C7402E; --cE:#D89B12; --cS:#3F8F63; --cT:#2F6FAE;
+  --p1:#E8821E; --p2:#C0392B; --p3:#8E44AD; --p4:#16828A;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;}
+.wrap{max-width:900px;margin:0 auto;padding:26px 18px 90px;}
+h1{color:var(--accent);font-size:1.6em;line-height:1.35;letter-spacing:-0.3px;}
+h2{color:var(--accent);font-size:1.3em;margin:40px 0 12px;border-top:1px solid var(--subtle);padding-top:14px;}
+h3{color:var(--accent-light);font-size:1.02em;margin:14px 0 6px;}
+p,li{opacity:0.92;}
+ul{padding-left:1.3em;}
+.card{background:var(--card);border:1px solid var(--subtle);border-radius:12px;padding:16px 20px;margin:12px 0;}
+.tip{background:rgba(230,184,125,0.09);border:2px solid var(--accent);border-radius:8px;padding:12px 16px;margin:12px 0;}
+.hl{color:var(--accent);font-weight:600;}
+.muted{color:var(--muted);font-size:0.85em;}
+.demobar{background:rgba(230,184,125,0.12);border:1px dashed var(--accent);border-radius:8px;padding:8px 14px;font-size:0.8em;color:var(--accent);margin:14px 0;}
+.btn{display:inline-block;background:var(--accent-light);color:var(--bg);border:none;border-radius:10px;padding:11px 24px;font-weight:700;cursor:pointer;text-decoration:none;font-size:0.9em;}
+.chartbox{background:var(--paper);border-radius:14px;padding:6px;box-shadow:0 4px 14px rgba(0,0,0,0.4);}
+svg{width:100%;height:auto;display:block;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+.chip{border-radius:20px;padding:6px 16px;font-size:0.85em;cursor:pointer;border:2px solid;background:transparent;color:var(--text);user-select:none;font-weight:600;}
+.chip.off{opacity:0.35;}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:0.88em;border-radius:8px;overflow:hidden;}
+th{background:var(--accent);color:var(--bg);padding:9px 10px;text-align:left;font-weight:600;}
+td{background:var(--card);border-bottom:1px solid var(--subtle);padding:8px 10px;line-height:1.5;}
+td.big{font-size:1.25em;text-align:center;}
+.scen{border-left:4px solid var(--accent);}
+.good{color:#9CCC7A;}
+.bad{color:#FF8A80;}
+a{color:var(--accent);}
+.legend{font-size:0.82em;color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>NETS 團隊互動模擬</h1>
+<p class="muted">從「一個人的報告」走到「一群人怎麼分工才舒服」｜Demo 版</p>
+<div class="demobar">Demo 說明：江昱德為 2026-07-09 實測資料；阿豪、小敏、老陳為<b>虛構模擬人物</b>（示範用，非真實成員）。所有分析文字為規則式推演示意，正式版的判讀邏輯由 Vincent 定版。</div>
+<p><a class="btn" href="index.html">回提案首頁</a> <a class="btn" href="chart.html" style="background:transparent;color:var(--accent-light);border:1.5px solid var(--accent-light);">看單人完整圖</a></p>
+
+<h2>一、雞與豬的分工原則（這頁的核心）</h2>
+<div class="card">
+<p>雞跟豬一起開早餐店，說好各出一份食材。雞每天出一顆蛋，不痛不癢；豬每天割一片火腿，割下去長不回來。<span class="hl">同樣叫「一份貢獻」，成本天差地遠。</span></p>
+<p style="margin-top:8px;">NETS 疊圖要解決的就是這件事：同一件任務，對 A 是出雞蛋（順著特質做，越做越有能量），對 B 是割豬肉（逆著特質硬撐，做完就耗竭）。<span class="hl">好的分工＝讓每個人多出雞蛋、少割豬肉。</span></p>
+</div>
+
+<h2>二、四個人的 NETS 疊圖</h2>
+<div class="chips" id="memchips"></div>
+<div class="chartbox"><svg id="overlay" viewBox="0 0 640 640"></svg></div>
+<p class="legend">方位同原圖：N 左上（駕馭）、E 右上（表現）、S 右下（平易）、T 左下（分析）。點上方名字可以開關每個人的框。</p>
+
+<h2>三、成本矩陣：誰做什麼是出蛋，誰做什麼是割肉</h2>
+<p class="muted">規則：該軸分數 ≥65 ＝ 🥚 出蛋（順手）；45–64 ＝ 🍳 可以做（要花力氣）；&lt;45 ＝ 🥩 割肉（高成本，做久會耗竭）。</p>
+<table>
+<tr><th>任務類型</th><th>江昱德（實測）</th><th>阿豪（模擬）</th><th>小敏（模擬）</th><th>老陳（模擬）</th></tr>
+<tr><td>拍板、推進度、扛決定（N）</td><td class="big">🍳</td><td class="big">🥚</td><td class="big">🥩</td><td class="big">🥩</td></tr>
+<tr><td>對外表達、招募、炒熱氣氛（E）</td><td class="big">🍳</td><td class="big">🍳</td><td class="big">🥚</td><td class="big">🥩</td></tr>
+<tr><td>協調安撫、陪伴、顧關係（S）</td><td class="big">🍳</td><td class="big">🥩</td><td class="big">🍳</td><td class="big">🥚</td></tr>
+<tr><td>品質把關、分析、文件（T）</td><td class="big">🥚</td><td class="big">🍳</td><td class="big">🥩</td><td class="big">🥚</td></tr>
+</table>
+<div class="tip"><p><span class="hl">這個團隊的自然分工：</span>阿豪開路拍板、小敏對外招人、老陳顧穩定跟品質、江昱德做分析中樞＋第二意見。注意兩個洞：沒有人「出蛋級」地愛做 E 以外的對外溝通深水區（小敏一個人扛），以及江昱德什麼都「可以做」，最容易變成什麼都接、天天割小塊肉。</p></div>
+
+<h2>四、組合火花與摩擦（兩兩對照）</h2>
+<div class="card"><h3>阿豪（N85）× 老陳（S75）</h3>
+<p>摩擦點：N 要快、S 要穩。阿豪覺得老陳擋路，老陳覺得阿豪莽撞。<br>
+建議：讓老陳負責「煞車有理由」（把風險寫成清單），阿豪負責「衝刺有期限」。規則講清楚，兩人是絕配；不講清楚，是主要衝突源。</p></div>
+<div class="card"><h3>江昱德（T66/N61）× 阿豪（N85）</h3>
+<p>摩擦點：兩個人都能拍板，但江的 N 是他我練出來的（本我 n=2），壓力大時撐 N 很耗能。<br>
+建議：讓阿豪當第一推進者，江退到「用 T 出蛋」的位置：拍板前的分析、拍板後的驗收。江不用跟阿豪搶 N，那對阿豪是蛋、對江是肉。</p></div>
+<div class="card"><h3>小敏（E80）× 江昱德（E48）</h3>
+<p>互補點：對外的事讓小敏站台前，江提供內容骨架。小敏怕的是沒材料，江怕的是站太久的舞台。剛好互相補。</p></div>
+
+<h2>五、情境模擬（以江昱德為例）</h2>
+<p class="muted">以下為規則式推演示意（依本我 t8/s7 vs 他我 N61 的結構推演），正式版由 Vincent 審定。</p>
+<div class="card scen"><h3>情境：時間被壓縮、壓力大的時候</h3>
+<p>可能的變化：他我的 N 還撐得住場面，但本我的 T 會想「再多要一點資料再決定」，拖久了變成 <b class="bad">T 過度使用 → 閃避</b>。<br>
+<span class="good">好的應對：</span>把「還缺什麼資料」寫成三條以內，設一個自己的決定時限。<br>
+<span class="bad">差的應對：</span>繼續蒐集資料假裝在推進。後果：別人看到的是「拖」，不是「嚴謹」。</p></div>
+<div class="card scen"><h3>情境：遇到很強勢的 N 型</h3>
+<p>可能的變化：江的他我 N 會想對撞，但那是練出來的肌肉，硬撐會耗竭；本我的 S 又想退讓，兩邊拉扯。<br>
+<span class="good">好的應對：</span>不搶決定權，改用 T 出牌：「我支持快，我只補一個數據風險。」強勢 N 通常吃這套，因為你沒擋他，是幫他把路修平。<br>
+<span class="bad">差的應對：</span>當場硬碰或全面退讓。後果：硬碰兩敗、退讓後回家內耗。</p></div>
+<div class="card scen"><h3>情境：被拖後腿的時候</h3>
+<p>可能的變化：本我 s7 會先體諒對方，累積到一個點才爆，爆的時候用他我 N 爆，對方會嚇到。<br>
+<span class="good">好的應對：</span>在體諒的第二次就把事實攤開（T 的語言：進度、影響、需要什麼），不等情緒滿水位。<br>
+<span class="bad">差的應對：</span>默默扛下來自己補。後果：對方永遠不知道、你永遠在割肉。</p></div>
+<div class="card scen"><h3>情境：狀態已經很糟，怎麼調整</h3>
+<p>推演：回到本我補血。江的本我是 t 和 s：安排一段不用對外的分析型工作（t 充電），加一段低社交壓力的陪伴型相處（s 充電）。<b>不要</b>用「再排更多對外行程」證明自己還行，那是拿他我的肉補本我的血。</p></div>
+
+<h2>六、這張圖以後怎麼餵資料（從測驗到日常）</h2>
+<table>
+<tr><th>資料來源</th><th>怎麼收</th><th>可信度</th></tr>
+<tr><td>正式 NETS 測驗</td><td>22 題問卷＋計分管線</td><td>★★★★（基準）</td></tr>
+<tr><td>遊戲化短測</td><td>朋友來玩互動版，先出風格草圖</td><td>★★★</td></tr>
+<tr><td>會議逐字稿推估</td><td>誰說什麼、語氣、節奏 → AI 推估每個與會者的風格傾向（<b>需本人同意</b>）</td><td>★★（標註「推估」，不當測評用）</td></tr>
+<tr><td>口述印象</td><td>「我跟 A 公司開會的感覺是……」→ AI 幫你對照你的圖分析該注意什麼</td><td>★★（教練對話用）</td></tr>
+</table>
+<div class="tip"><p><span class="hl">同一個原則貫穿：</span>可信度分級標清楚，推估的永遠標推估，要做關鍵判斷就回到正式測驗。這樣 Vincent 的專業才是整套系統的定錨，AI 是幫他把觸角伸進日常。</p></div>
+
+<p style="margin-top:30px;"><a class="btn" href="index.html">回提案首頁</a></p>
+<p class="muted" style="margin-top:20px;">NETS 測評：陳明勇 Vincent｜底圖：林金根｜模擬與網頁：江昱德 × AI（2026-07-09）</p>
+</div>
+
+<script>
+var CX=320,CY=320,S=210;
+var MEMBERS=[
+ {name:"江昱德（實測）",color:"#E8821E",vals:{N:61,E:48,S:62,T:66},on:true},
+ {name:"阿豪（模擬）",color:"#C0392B",vals:{N:85,E:55,S:30,T:45},on:true},
+ {name:"小敏（模擬）",color:"#8E44AD",vals:{N:35,E:80,S:60,T:40},on:true},
+ {name:"老陳（模擬）",color:"#16828A",vals:{N:40,E:35,S:75,T:70},on:true}
+];
+var NS="http://www.w3.org/2000/svg";
+var svg=document.getElementById('overlay');
+function el(tag,attrs,txt){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(txt!=null)e.textContent=txt;svg.appendChild(e);return e;}
+function pt(angDeg,v){
+  var a=angDeg*Math.PI/180,c=Math.cos(a),s=Math.sin(a);
+  var B=S/Math.max(Math.abs(c),Math.abs(s));
+  return [CX+v/100*B*c, CY-v/100*B*s];
+}
+// 底圖：方形環＋米字＋角標
+[25,50,75,100].forEach(function(v){
+  el("rect",{x:CX-S*v/100,y:CY-S*v/100,width:2*S*v/100,height:2*S*v/100,fill:"none",stroke:"#b7ae9d","stroke-width":v===100?2:0.8});
+});
+[[135,-45],[45,-135],[90,-90],[0,180]].forEach(function(pr){
+  var p1=pt(pr[0],100),p2=pt(pr[1],100);
+  el("line",{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:"#8f8676","stroke-width":1});
+});
+var CLR={N:"#C7402E",E:"#D89B12",S:"#3F8F63",T:"#2F6FAE"};
+[["N",135,"駕馭"],["E",45,"表現"],["S",-45,"平易"],["T",-135,"分析"]].forEach(function(c){
+  var p=pt(c[1],113);
+  el("text",{x:p[0],y:p[1]+6,"text-anchor":"middle","font-size":22,"font-weight":800,fill:CLR[c[0]]},c[0]);
+  var p2=pt(c[1],126);
+  el("text",{x:p2[0],y:p2[1]+6,"text-anchor":"middle","font-size":11,fill:"#6b6154"},c[2]);
+});
+// 成員多邊形（中點＝相鄰兩角連線正中間）
+function polyPts(v){
+  var P={N:pt(135,v.N),E:pt(45,v.E),S:pt(-45,v.S),T:pt(-135,v.T)};
+  var mids={ne:["N","E"],es:["E","S"],st:["S","T"],te:["T","N"]};
+  var out=[P.N];
+  out.push([(P.N[0]+P.E[0])/2,(P.N[1]+P.E[1])/2],P.E,
+           [(P.E[0]+P.S[0])/2,(P.E[1]+P.S[1])/2],P.S,
+           [(P.S[0]+P.T[0])/2,(P.S[1]+P.T[1])/2],P.T,
+           [(P.T[0]+P.N[0])/2,(P.T[1]+P.N[1])/2]);
+  return out;
+}
+var groups=[];
+MEMBERS.forEach(function(m,mi){
+  var g=document.createElementNS(NS,"g");svg.appendChild(g);
+  var pts=polyPts(m.vals),d="";
+  pts.forEach(function(p,i){d+=(i?"L":"M")+p[0].toFixed(1)+","+p[1].toFixed(1);});
+  var path=document.createElementNS(NS,"path");
+  path.setAttribute("d",d+"Z");path.setAttribute("fill",m.color+"18");
+  path.setAttribute("stroke",m.color);path.setAttribute("stroke-width",2.6);
+  path.setAttribute("stroke-linejoin","round");
+  g.appendChild(path);
+  [0,2,4,6].forEach(function(i){
+    var c=document.createElementNS(NS,"circle");
+    c.setAttribute("cx",pts[i][0]);c.setAttribute("cy",pts[i][1]);
+    c.setAttribute("r",4);c.setAttribute("fill",m.color);
+    g.appendChild(c);
+  });
+  groups.push(g);
+});
+// 開關
+var chipbox=document.getElementById('memchips');
+MEMBERS.forEach(function(m,mi){
+  var c=document.createElement('span');
+  c.className='chip';c.style.borderColor=m.color;c.style.color=m.color;
+  c.textContent=m.name+"  N"+m.vals.N+" E"+m.vals.E+" S"+m.vals.S+" T"+m.vals.T;
+  c.onclick=function(){
+    m.on=!m.on;c.classList.toggle('off',!m.on);
+    groups[mi].style.display=m.on?"":"none";
+  };
+  chipbox.appendChild(c);
+});
+</script>
+</body>
+</html>
