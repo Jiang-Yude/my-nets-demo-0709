@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<title>從人際圖到管理工具（Demo）</title>
+<style>
+:root{
+  --bg:#352118; --text:#FFF8DC; --accent:#E6B87D; --accent-light:#D4A574;
+  --card:#4A2C1F; --subtle:#5D3A2A; --muted:#A08060; --paper:#FAF7EE;
+  --p1:#E8821E; --p2:#C0392B; --p3:#8E44AD; --p4:#16828A;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;}
+.wrap{max-width:920px;margin:0 auto;padding:26px 18px 90px;}
+h1{color:var(--accent);font-size:1.6em;letter-spacing:-0.3px;line-height:1.35;}
+h2{color:var(--accent);font-size:1.3em;margin:42px 0 12px;border-top:1px solid var(--subtle);padding-top:14px;}
+h3{color:var(--accent-light);font-size:1.02em;margin:14px 0 6px;}
+p,li{opacity:0.92;}
+ul{padding-left:1.3em;}
+.card{background:var(--card);border:1px solid var(--subtle);border-radius:12px;padding:16px 20px;margin:12px 0;}
+.tip{background:rgba(230,184,125,0.09);border:2px solid var(--accent);border-radius:8px;padding:12px 16px;margin:12px 0;}
+.hl{color:var(--accent);font-weight:600;}
+.muted{color:var(--muted);font-size:0.85em;}
+.demobar{background:rgba(230,184,125,0.12);border:1px dashed var(--accent);border-radius:8px;padding:8px 14px;font-size:0.8em;color:var(--accent);margin:14px 0;}
+.btn{display:inline-block;background:var(--accent-light);color:var(--bg);border:none;border-radius:10px;padding:11px 24px;font-weight:700;cursor:pointer;text-decoration:none;font-size:0.9em;}
+.ghost{background:transparent;color:var(--accent-light);border:1.5px solid var(--accent-light);}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:0.86em;border-radius:8px;overflow:hidden;}
+th{background:var(--accent);color:var(--bg);padding:9px 10px;text-align:left;font-weight:600;}
+td{background:var(--card);border-bottom:1px solid var(--subtle);padding:8px 10px;line-height:1.5;vertical-align:top;}
+td.c{text-align:center;font-weight:700;}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0;}
+.flow .step{background:var(--card);border:1.5px solid var(--accent-light);border-radius:10px;padding:8px 14px;font-size:0.85em;font-weight:600;}
+.flow .arr{color:var(--muted);}
+.tagJ{color:var(--p1);font-weight:700;}
+.tagH{color:#E57368;font-weight:700;}
+.tagM{color:#C39BD3;font-weight:700;}
+.tagC{color:#6CC5CE;font-weight:700;}
+.chartbox{background:var(--paper);border-radius:14px;padding:10px;box-shadow:0 4px 14px rgba(0,0,0,0.4);}
+svg{width:100%;height:auto;display:block;}
+.A{background:rgba(232,130,30,0.30)!important;}
+a{color:var(--accent);}
+.legend{font-size:0.8em;color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>從人際圖到管理工具<br><span style="font-size:0.7em;color:var(--muted);">測完之後怎麼分工、怎麼帶：OGSM × ARCI × 甘特 × SROI</span></h1>
+<div class="demobar">Demo 說明：延續團隊模擬頁的四人（江昱德＝實測；阿豪、小敏、老陳＝虛構模擬人物）。示例專案與所有欄位為推演示意，實際內容由團隊自己填、Vincent 與管理顧問定版。</div>
+<p><a class="btn" href="team.html">← 回團隊互動模擬</a> <a class="btn ghost" href="index.html">提案首頁</a></p>
+
+<h2>零、整條管線長這樣</h2>
+<div class="flow">
+  <span class="step">NETS 測評</span><span class="arr">→</span>
+  <span class="step">成本矩陣（誰出蛋誰割肉）</span><span class="arr">→</span>
+  <span class="step">ARCI 權責分工</span><span class="arr">→</span>
+  <span class="step">OGSM 目標對齊</span><span class="arr">→</span>
+  <span class="step">甘特圖排程</span><span class="arr">→</span>
+  <span class="step">SROI 影響力（選配）</span>
+</div>
+<div class="tip"><p><span class="hl">核心主張：</span>人際分析不是終點，是管理工具的「輸入層」。傳統上 OGSM 和 ARCI 的欄位靠開會吵出來；接上 NETS 之後，<b>每個欄位都有一版依特質成本自動帶入的建議值</b>，團隊只做確認與微調。吵架的時間變成校準的時間。</p></div>
+<p class="muted">示例專案：「幫一個 NPO 導入 AI 知識庫，三個月後產出第一份影響力報告」（含社會影響力，所以 SROI 是標配）。成員：<span class="tagH">阿豪 N85</span>、<span class="tagM">小敏 E80</span>、<span class="tagC">老陳 S75/T70</span>、<span class="tagJ">江昱德 T66/S62/N61</span>。</p>
+
+<h2>一、OGSM 目標對齊（輕量版：遠中近就好）</h2>
+<p class="muted">不做完整 OGSM 表格轟炸，先讓四個人對三個時間點的目標點頭，每個目標掛一個「出蛋的主責者」。</p>
+<table>
+<tr><th>層級</th><th>目標（G）</th><th>策略（S，一句話）</th><th>衡量（M）</th><th>主責</th></tr>
+<tr><td><b>目的 O</b></td><td colspan="3">讓 NPO 三個月內用 AI 知識庫自主產出第一份影響力報告</td><td>全員</td></tr>
+<tr><td>近（第 1 個月）</td><td>完成利害關係人訪談與資料盤點</td><td>先聽人再碰資料</td><td>訪談 ≥8 人、資料清單定稿</td><td><span class="tagM">小敏</span>＋<span class="tagJ">江</span></td></tr>
+<tr><td>中（第 2 個月）</td><td>知識庫上線且 NPO 團隊會用</td><td>邊建邊教，不做完才交</td><td>核心成員 3 人能自主查用</td><td><span class="tagJ">江</span>＋<span class="tagC">老陳</span></td></tr>
+<tr><td>遠（第 3 個月）</td><td>影響力報告發布＋SROI 初算</td><td>質化故事與量化指標並列</td><td>報告發布、SROI 比率出爐</td><td><span class="tagC">老陳</span>＋<span class="tagM">小敏</span>（發布）</td></tr>
+</table>
+<p class="legend">NETS 帶入邏輯：每個 G 的主責給「這類工作是出蛋」的人；跨期目標的銜接（近→中）刻意讓主責重疊一人，避免交接斷層。</p>
+
+<h2>二、ARCI 權責分工（當責表）</h2>
+<p class="muted">A＝當責者（一件事只有一個 A，成敗算他的）；R＝執行者；C＝被諮詢；I＝被告知。<span class="hl">NETS 帶入原則：A 給出蛋的人，割肉格不排 R。</span></p>
+<table>
+<tr><th>任務</th><th>阿豪</th><th>小敏</th><th>老陳</th><th>江昱德</th><th>NETS 依據</th></tr>
+<tr><td>專案拍板、資源與時程談判</td><td class="c A">A/R</td><td class="c">I</td><td class="c">C</td><td class="c">C</td><td>N85 出蛋；江的 N 是練的，不搶 A</td></tr>
+<tr><td>利害關係人訪談、對外溝通</td><td class="c">I</td><td class="c A">A/R</td><td class="c">C</td><td class="c">R</td><td>E80 出蛋；老陳 C 補「聽的深度」</td></tr>
+<tr><td>知識庫架構與資料清理</td><td class="c">I</td><td class="c">I</td><td class="c">C</td><td class="c A">A/R</td><td>T66 出蛋；小敏割肉格不排 R</td></tr>
+<tr><td>進度守護與品質驗收</td><td class="c">C</td><td class="c">I</td><td class="c A">A/R</td><td class="c">C</td><td>S75+T70：穩定與細節都出蛋</td></tr>
+<tr><td>影響力指標與 SROI 報告</td><td class="c">I</td><td class="c">C</td><td class="c">R</td><td class="c A">A/R</td><td>分析出蛋；小敏 C 供訪談素材</td></tr>
+<tr><td>成果發布會、對外宣傳</td><td class="c">C</td><td class="c A">A/R</td><td class="c">I</td><td class="c">C</td><td>舞台是小敏的蛋、江的肉</td></tr>
+</table>
+<div class="tip"><p><span class="hl">跟一般 ARCI 的差別：</span>一般排 ARCI 看職稱跟誰有空；這裡多一欄「NETS 依據」，A 的分配有人際成本的理由。爭議發生時，吵的是依據，不是人。</p></div>
+
+<h2>三、甘特圖（12 週）</h2>
+<div class="chartbox"><svg id="gantt" viewBox="0 0 920 360"></svg></div>
+<p class="legend">顏色＝主責者（橘＝江昱德、紅＝阿豪、紫＝小敏、藍綠＝老陳）；◆＝里程碑。NETS 帶入邏輯：同一個人的色塊盡量不重疊（避免同期割肉＋出蛋雙線作戰）；小敏的高峰排在頭尾（訪談、發布），中段讓她輕。</p>
+
+<h2>四、SROI（選配；社會影響力專案＝標配）</h2>
+<p class="muted">輕量五欄：先讓團隊看見「投入 → 成果 → 換算」的邏輯，正式計算另請專業。</p>
+<table>
+<tr><th>利害關係人</th><th>投入</th><th>產出</th><th>成果（改變了什麼）</th><th>指標／財務代理值</th></tr>
+<tr><td>NPO 工作人員</td><td>學習時間約 20 hr／人</td><td>會用知識庫</td><td>行政查找時間下降</td><td>省下時數 × 時薪</td></tr>
+<tr><td>服務對象</td><td>—</td><td>服務紀錄更完整</td><td>服務銜接品質提升</td><td>滿意度／回訪率</td></tr>
+<tr><td>資助方</td><td>專案經費</td><td>影響力報告</td><td>續捐信心提升</td><td>續約率／續捐金額</td></tr>
+<tr><td>NPO 組織本身</td><td>三個月專注投入</td><td>知識資產沉澱</td><td>人員異動時知識不流失</td><td>交接時間縮短</td></tr>
+</table>
+<p class="legend">量化比率之外，質化的「成果事件鏈」（誰因此發生了什麼具體改變）建議並列呈現，兩者互補不互斥。</p>
+
+<h2>五、這條管線對數位商會的意義</h2>
+<div class="card">
+<ul>
+<li><b>對個人</b>：測驗結果直接變成「我在專案裡的位置」，不是一張放著好看的圖。</li>
+<li><b>對團隊</b>：組隊當下就能產出 ARCI 草表＋甘特草案，開工會議從「吵分工」變成「校準草案」。</li>
+<li><b>對商會</b>：媒合完成不是結束，系統陪整個合作案走完 OGSM → 交付 → SROI，合作結果回流成下一次媒合的資料（魔球迴圈）。</li>
+<li><b>對 Vincent</b>：Team Scan 從「一份團隊解析圖」升級成「開工套件」：解析圖＋ARCI 建議＋分工依據，一次交付。</li>
+</ul>
+</div>
+
+<p style="margin-top:26px;"><a class="btn" href="team.html">← 團隊互動模擬</a> <a class="btn ghost" href="index.html">提案首頁</a></p>
+<p class="muted" style="margin-top:18px;">NETS 測評：陳明勇 Vincent｜底圖：林金根｜管線設計與網頁：江昱德 × AI（2026-07-09）</p>
+</div>
+
+<script>
+// 甘特圖
+var NS="http://www.w3.org/2000/svg";
+var svg=document.getElementById('gantt');
+function el(tag,attrs,txt){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(txt!=null)e.textContent=txt;svg.appendChild(e);return e;}
+var L=180,T=40,W=700,RH=38;
+var COLORS={J:"#E8821E",H:"#C0392B",M:"#8E44AD",C:"#16828A"};
+var TASKS=[
+ {name:"啟動與資源談判",owner:"H",s:1,e:2},
+ {name:"利害關係人訪談",owner:"M",s:1,e:4},
+ {name:"資料盤點與清理",owner:"J",s:2,e:5},
+ {name:"知識庫建置",owner:"J",s:4,e:8},
+ {name:"教學與導入",owner:"C",s:6,e:9},
+ {name:"指標收集（SROI）",owner:"C",s:7,e:10},
+ {name:"報告撰寫",owner:"J",s:9,e:11},
+ {name:"發布與宣傳",owner:"M",s:11,e:12}
+];
+var MILES=[[4,"架構定稿"],[8,"知識庫上線"],[12,"報告發布"]];
+function wx(w){return L+(w-1)/12*W;}
+// 週格線
+for(var w=1;w<=12;w++){
+  el("line",{x1:wx(w),y1:T,x2:wx(w),y2:T+TASKS.length*RH,stroke:"#d8d2c2","stroke-width":1});
+  el("text",{x:wx(w)+W/24,y:T-12,"text-anchor":"middle","font-size":11,fill:"#8a8071"},"W"+w);
+}
+el("line",{x1:wx(13),y1:T,x2:wx(13),y2:T+TASKS.length*RH,stroke:"#d8d2c2","stroke-width":1});
+// 月份帶
+[["第 1 個月",1],["第 2 個月",5],["第 3 個月",9]].forEach(function(m){
+  el("text",{x:wx(m[1]),y:16,"font-size":12,"font-weight":700,fill:"#6b6154"},m[0]);
+});
+// 任務列
+TASKS.forEach(function(t,i){
+  var y=T+i*RH;
+  el("text",{x:L-10,y:y+RH/2+4,"text-anchor":"end","font-size":12.5,fill:"#3a3126"},t.name);
+  el("rect",{x:wx(t.s),y:y+8,width:(t.e-t.s+1)/12*W,height:RH-16,rx:6,fill:COLORS[t.owner],opacity:0.85});
+});
+// 里程碑
+MILES.forEach(function(m){
+  var x=wx(m[0]+1);
+  el("line",{x1:x,y1:T,x2:x,y2:T+TASKS.length*RH,stroke:"#C7402E","stroke-width":1.2,"stroke-dasharray":"4,4"});
+  el("text",{x:x,y:T+TASKS.length*RH+18,"text-anchor":"middle","font-size":11.5,fill:"#C7402E","font-weight":700},"◆ "+m[1]);
+});
+</script>
+</body>
+</html>
