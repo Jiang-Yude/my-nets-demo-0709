@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>NETS 的下一步：AI 數位化提案</title>
+<style>
+:root{
+  --bg:#352118; --text:#FFF8DC; --accent:#E6B87D; --accent-light:#D4A574;
+  --card:#4A2C1F; --subtle:#5D3A2A; --muted:#A08060;
+  --success:#7B9E6B; --warning:#FFB74D; --error:#FF6F6F;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--text);font-size:16px;height:100vh;overflow:hidden;display:flex;flex-direction:column;}
+#slide-container{flex:1;overflow-y:auto;font-size:inherit;}
+.slide{display:none;min-height:100%;padding:36px 44px 96px;max-width:1000px;margin:0 auto;}
+.slide.active{display:flex;flex-direction:column;}
+h1{font-size:2em;color:var(--accent);letter-spacing:-0.3px;margin-bottom:20px;line-height:1.3;}
+h2{font-size:1.5em;color:var(--accent);margin-bottom:18px;letter-spacing:-0.3px;}
+h3{font-size:1.1em;color:var(--accent-light);margin:14px 0 8px;}
+p,li{font-size:1em;line-height:1.75;letter-spacing:0.2px;opacity:0.92;}
+ul,ol{padding-left:1.4em;margin:8px 0;}
+li{margin:6px 0;}
+.card{background:var(--card);border:1px solid var(--subtle);border-radius:12px;box-shadow:0 2px 4px rgba(0,0,0,0.3);padding:20px 24px;margin:10px 0;}
+.tip{background:rgba(230,184,125,0.09);border:2px solid var(--accent);border-radius:8px;padding:14px 16px;margin-top:14px;}
+.hl{color:var(--accent);font-weight:600;}
+.muted{color:var(--muted);font-size:0.85em;}
+table{border-collapse:collapse;width:100%;margin:12px 0;border-radius:8px;overflow:hidden;}
+th{background:var(--accent);color:var(--bg);padding:10px 12px;text-align:left;font-size:0.85em;font-weight:600;}
+td{background:var(--card);border-bottom:1px solid var(--subtle);padding:9px 12px;font-size:0.85em;line-height:1.5;}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0;}
+.flow .step{background:var(--card);border:1px solid var(--subtle);border-radius:8px;padding:8px 12px;font-size:0.82em;}
+.flow .arr{color:var(--muted);font-size:0.9em;}
+.flow .bad{border-color:var(--error);color:var(--error);}
+.flow .good{border-color:var(--success);}
+.layers{display:flex;flex-direction:column;gap:6px;margin:12px 0;}
+.layer{display:flex;gap:12px;background:var(--card);border:1px solid var(--subtle);border-radius:8px;padding:10px 14px;align-items:baseline;}
+.layer .tag{color:var(--accent);font-weight:700;white-space:nowrap;font-size:0.9em;}
+.layer .desc{font-size:0.88em;opacity:0.9;line-height:1.5;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:720px){.grid2{grid-template-columns:1fr;}}
+.kicker{color:var(--muted);text-transform:none;font-size:0.85em;margin-bottom:8px;}
+.big-center{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;}
+.big-center h1{font-size:2.6em;}
+.pagenum{position:fixed;bottom:14px;left:20px;color:var(--muted);font-size:12px;z-index:10;}
+#nav{position:fixed;bottom:10px;right:14px;display:flex;gap:6px;z-index:10;opacity:0.45;transition:opacity .3s;}
+#nav:hover{opacity:1;}
+#nav button{width:32px;height:32px;border:none;border-radius:8px;background:var(--accent-light);color:var(--bg);font-size:14px;font-weight:600;cursor:pointer;}
+.axisN{color:#FF8A65;}.axisE{color:#FFD54F;}.axisT{color:#81D4FA;}.axisS{color:#A5D6A7;}
+</style>
+</head>
+<body>
+<div id="slide-container">
+
+<!-- 1 標題 -->
+<section class="slide active big-center">
+  <p class="kicker">提案簡報｜2026-07-09｜江昱德 × Claude 整理</p>
+  <h1>NETS 的下一步<br>讓二十年的功力，接上 AI 的手腳</h1>
+  <p style="margin-top:16px;">給 Vincent（陳明勇 訓練顧問）</p>
+  <p class="muted" style="margin-top:28px;">← → 方向鍵換頁｜右下角可調字體大小</p>
+</section>
+
+<!-- 2 現況 -->
+<section class="slide">
+  <h2>NETS 現在是怎麼運作的</h2>
+  <p>從江昱德本人實測一輪（2026-07-07 至 07-09）還原出來的實際流程：</p>
+  <div class="flow">
+    <span class="step">Google 表單作答</span><span class="arr">→</span>
+    <span class="step bad">Excel 手動計分</span><span class="arr">→</span>
+    <span class="step bad">手動複製資料列</span><span class="arr">→</span>
+    <span class="step">Excel 雷達圖</span><span class="arr">→</span>
+    <span class="step bad">手動另存 PDF</span><span class="arr">→</span>
+    <span class="step bad">人工拼貼解析簡報</span>
+  </div>
+  <div class="card">
+    <h3>紅框的每一步，都是 Vincent 的時間</h3>
+    <ul>
+      <li>每出一份報告，都要人工找資料、複製、對圖、寫解析</li>
+      <li>單人版 Excel 的常模公式已經斷掉（#REF! 錯誤），比較基準線失效</li>
+      <li>解析簡報的數字跟受測者實際分數沒有串接，全靠手工</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3 資產 -->
+<section class="slide">
+  <h2>真正值錢的，是這三樣</h2>
+  <div class="card"><h3>1. 解析文字庫</h3>
+  <p>五型特質敘述、各型的最佳管理與相處方式、五型 × 10 維度總表、「面對某型時」的溝通建議。這是 Vincent 二十年淬鍊的內容，也是 AI 最需要的知識庫。</p></div>
+  <div class="card"><h3>2. 歷史施測資料</h3>
+  <p>數十家企業、數百筆真實作答記錄，是重建常模（比較基準線）的原料。</p></div>
+  <div class="card"><h3>3. Vincent 本人的解讀經驗</h3>
+  <p>看到一組分數就知道這個人的狀態、適合怎麼被帶。這種隱性知識可以透過訪談提煉，讓 AI 學著用您的方式判讀。</p></div>
+  <div class="tip"><p><span class="hl">核心想法：</span>題目和 Excel 都可以被工具取代，文字庫和解讀經驗不能。AI 化就是讓前者自動化，讓後者放大。</p></div>
+</section>
+
+<!-- 4 願景 -->
+<section class="slide big-center">
+  <h2 style="font-size:1.2em;">一句話願景</h2>
+  <h1 style="font-size:2em;">NETS 從「一份測驗」<br>變成「一張教別人怎麼跟你合作的說明書」</h1>
+  <p style="margin-top:18px;">受測者好玩、Vincent 省力、團隊拿到可行動的相處建議</p>
+</section>
+
+<!-- 5 架構 -->
+<section class="slide">
+  <h2>系統架構：五層分工</h2>
+  <div class="layers">
+    <div class="layer"><span class="tag">L5 商會整合</span><span class="desc">NETS 剖面成為數位商會成員卡的一個維度，支援組隊互補分析（願景階段）</span></div>
+    <div class="layer"><span class="tag">L4 呈現</span><span class="desc">結果網頁：雷達圖＋每個數字的白話注記＋互動測驗前端</span></div>
+    <div class="layer"><span class="tag">L3 AI 解析</span><span class="desc">規則庫先行、AI 加值在後：分數對應 Vincent 的原文模板，AI 只做個人化組稿，每段可溯源</span></div>
+    <div class="layer"><span class="tag">L2 計分引擎</span><span class="desc">腳本自動計分，100% 沿用現行 Excel 公式，新舊結果完全一致才上線</span></div>
+    <div class="layer"><span class="tag">L1 資料層</span><span class="desc">題庫與對照總表、作答記錄、常模資料、結構化的解析文字庫</span></div>
+  </div>
+  <div class="tip"><p><span class="hl">設計底線：</span>AI 不自創論斷。所有解析文字都來自 Vincent 的文字庫，AI 只負責挑選、組合、講白話。</p></div>
+</section>
+
+<!-- 6 方向A -->
+<section class="slide">
+  <h2>方向一：Vincent 的 AI 分析引擎（第一版就做）</h2>
+  <div class="grid2">
+    <div class="card"><h3>現在</h3><p>一份報告 = 半天手工：查表、計分、畫圖、拼簡報</p></div>
+    <div class="card"><h3>之後</h3><p>表單回應丟進去，自動出：分數、雷達圖、解析報告初稿。<span class="hl">Vincent 只做最後的專業把關。</span></p></div>
+  </div>
+  <ul style="margin-top:14px;">
+    <li>常模重建：用歷史資料重新算出可靠的比較基準線（含去識別化）</li>
+    <li>驗收標準：用江昱德的實測資料跑出跟現行 Excel 一模一樣的結果，才算通過</li>
+    <li>批次能力：一個班 30 人，30 份報告初稿同時出</li>
+  </ul>
+</section>
+
+<!-- 7 方向B -->
+<section class="slide">
+  <h2>方向二：讓受測變好玩（互動測驗網頁）</h2>
+  <p>參考江昱德已上線的「AI 戰力大樓」遊戲化測驗架構：答題推進、即時回饋、結算演出、稱號分享。</p>
+  <div class="grid2" style="margin-top:10px;">
+    <div class="card"><h3>B1 穩健版（先做）</h3><p><span class="hl">題目一字不動、計分完全沿用</span>，好玩的部分全做在題目外層：進度敘事、關卡感、結果頁演出。分數直接可信。</p></div>
+    <div class="card"><h3>B2 對話版（研究原型）</h3><p>跟 AI 聊天，AI 從對話推斷風格傾向。只做研究比對，不當正式測驗。</p></div>
+  </div>
+  <div class="tip"><p>結果頁每個數字旁邊都有注記跟白話解釋，受測者自己就看得懂，不用等人講解。<span class="hl">附的 Demo 頁面可以直接點看體驗。</span></p></div>
+</section>
+
+<!-- 8 方向C -->
+<section class="slide">
+  <h2>方向三：接上數位商會（中長期）</h2>
+  <p>江昱德規劃中的數位商會，每位成員有一張「合作資料卡」。NETS 可以成為其中的<span class="hl">行為風格維度</span>：約人合作之前，先知道對方怎麼溝通最順。</p>
+  <div class="card">
+    <h3>四條保護原則（先講清楚，才走得遠）</h3>
+    <ul>
+      <li>成員<span class="hl">明示同意</span>才納入，可隨時撤回</li>
+      <li>只當「風格與溝通偏好」參考，<span class="hl">不當能力評分、不做總分排名</span></li>
+      <li>推薦理由可解釋，重要媒合有人工覆核</li>
+      <li>對成員的說法是「別人會更懂怎麼跟你合作」，不是「商會在評估你」</li>
+    </ul>
+  </div>
+  <p style="margin-top:10px;">Vincent 既有的 <span class="hl">Team Scan 團隊解析</span>，正好對接商會的組隊場景，這是現成的產品線。</p>
+</section>
+
+<!-- 9 消費者模擬 -->
+<section class="slide">
+  <h2>我們先讓 AI 模擬了十位消費者</h2>
+  <p class="muted">方法：SSR 合成消費者壓測（屬前置假設檢查，不是市場結論，之後要用真人訪談驗證）</p>
+  <div class="card" style="margin-top:10px;">
+    <h3>結果：十位中八位正確理解，但有三個要先解決的問題</h3>
+    <ol>
+      <li><span class="hl">差異化：</span>對陌生人來說「跟免費測驗差在哪」講不出來 → 主打「測完有真人可約＋解析出自 Vincent 原版文字庫」</li>
+      <li><span class="hl">被評估感：</span>「結果被商會分析」讓人防備 → 改講「合作說明書」，資料預設私有、分享才可見</li>
+      <li><span class="hl">用語紅線：</span>提「易經」會被當算命、談效度會被專業者挑戰 → 統一用「風格參考工具」語言，並明示「發展參考、非選才依據」</li>
+    </ol>
+  </div>
+  <p style="margin-top:8px;">付費點建議：單人報告免費完整給，<span class="hl">賣的是 Vincent 的真人解讀時間與 Team Scan 團隊分析</span>。</p>
+</section>
+
+<!-- 10 路線 -->
+<section class="slide">
+  <h2>四階段路線（每階段都有可驗收的交付）</h2>
+  <table>
+    <tr><th>階段</th><th>交付物</th><th>關鍵前提</th></tr>
+    <tr><td>0 前置閘門</td><td>IP 授權書面確認、資料同意書、題目對照總表、個資去識別化</td><td>Vincent 拍板</td></tr>
+    <tr><td>1 管線自動化</td><td>計分腳本＋自動雷達圖＋常模策略定案</td><td>階段 0 完成</td></tr>
+    <tr><td>2 AI 解析</td><td>解析知識庫（可溯源）＋自動報告網頁</td><td>文字庫定版</td></tr>
+    <tr><td>3 互動測驗</td><td>遊戲化測驗網頁（B1 原題版先行）</td><td>階段 1、2</td></tr>
+    <tr><td>4 商會整合</td><td>NETS 維度進成員卡＋組合分析</td><td>商會系統時程</td></tr>
+  </table>
+  <div class="tip"><p><span class="hl">第一版只做最小路徑：</span>計分、圖表、報告自動化。先讓 Vincent 每週省下的時間看得見，再談其他。</p></div>
+</section>
+
+<!-- 11 拍板 -->
+<section class="slide">
+  <h2>需要 Vincent 拍板的四件事</h2>
+  <div class="card"><h3>1. 權利與合作模式</h3><p>NETS 過去由博策管顧代理商業化，數位化前先把權利歸屬與這次的合作方式講清楚。</p></div>
+  <div class="card"><h3>2. 類型系統定版</h3><p>對外用 15 種混合個性、17 型、或其他？以哪份文件為準？</p></div>
+  <div class="card"><h3>3. 常模策略</h3><p>沿用歷史企業樣本（標註年代），還是從新系統重新累積？</p></div>
+  <div class="card"><h3>4. 解析文字庫授權與定版</h3><p>哪個版本是正典？AI 可以引用到什麼範圍？</p></div>
+  <p style="margin-top:16px;" class="muted">附件：架構企劃全文、AI 消費者驗證報告、互動測驗 Demo 頁面（皆在「01 文森的NETS」資料夾）</p>
+</section>
+
+</div>
+
+<div class="pagenum"><span id="cur">1</span> / <span id="total">11</span></div>
+<div id="nav">
+  <button id="fminus">A−</button><button id="freset">A</button><button id="fplus">A+</button>
+  <button id="prev">‹</button><button id="next">›</button>
+</div>
+
+<script>
+(function(){
+  var slides=document.querySelectorAll('.slide'),i=0,scale=1.0;
+  var container=document.getElementById('slide-container');
+  document.getElementById('total').textContent=slides.length;
+  function show(n){
+    if(n<0||n>=slides.length)return;
+    slides[i].classList.remove('active');i=n;
+    slides[i].classList.add('active');
+    document.getElementById('cur').textContent=i+1;
+    container.scrollTop=0;
+  }
+  function setScale(s){
+    scale=Math.min(3,Math.max(0.5,s));
+    container.style.fontSize=(scale*16)+'px';
+    container.scrollTop=0;
+  }
+  document.getElementById('next').onclick=function(){show(i+1);};
+  document.getElementById('prev').onclick=function(){show(i-1);};
+  document.getElementById('fplus').onclick=function(){setScale(scale+0.1);};
+  document.getElementById('fminus').onclick=function(){setScale(scale-0.1);};
+  document.getElementById('freset').onclick=function(){setScale(1);};
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key==='PageDown'){show(i+1);}
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='PageUp'){show(i-1);}
+  });
+})();
+</script>
+</body>
+</html>

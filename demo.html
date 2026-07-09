@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>NETS 互動測驗 Demo</title>
+<style>
+:root{
+  --bg:#352118; --text:#FFF8DC; --accent:#E6B87D; --accent-light:#D4A574;
+  --card:#4A2C1F; --subtle:#5D3A2A; --muted:#A08060;
+  --success:#7B9E6B; --warning:#FFB74D; --error:#FF6F6F;
+  --n:#FF8A65; --e:#FFD54F; --t:#81D4FA; --s:#A5D6A7;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;}
+.wrap{max-width:760px;margin:0 auto;padding:28px 20px 80px;}
+.screen{display:none;}
+.screen.active{display:block;animation:fadein .4s;}
+@keyframes fadein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+h1{color:var(--accent);font-size:1.7em;line-height:1.35;margin-bottom:14px;letter-spacing:-0.3px;}
+h2{color:var(--accent);font-size:1.3em;margin-bottom:12px;}
+h3{color:var(--accent-light);font-size:1.05em;margin:16px 0 8px;}
+p{margin:8px 0;opacity:0.92;}
+.muted{color:var(--muted);font-size:0.85em;}
+.card{background:var(--card);border:1px solid var(--subtle);border-radius:12px;padding:18px 20px;margin:12px 0;box-shadow:0 2px 4px rgba(0,0,0,0.3);}
+.btn{display:inline-block;background:var(--accent-light);color:var(--bg);border:none;border-radius:10px;padding:13px 28px;font-size:1em;font-weight:700;cursor:pointer;transition:all .25s;box-shadow:0 2px 4px rgba(0,0,0,0.3);}
+.btn:hover{transform:translateY(-1px);background:var(--accent);}
+.btn:disabled{opacity:0.35;cursor:not-allowed;transform:none;}
+.btn-ghost{background:transparent;color:var(--accent-light);border:1px solid var(--accent-light);}
+.demobar{background:rgba(230,184,125,0.12);border:1px dashed var(--accent);border-radius:8px;padding:8px 14px;font-size:0.8em;color:var(--accent);margin-bottom:18px;}
+/* progress */
+.progress{display:flex;align-items:center;gap:10px;margin:14px 0 20px;}
+.ptrack{flex:1;height:10px;background:var(--card);border-radius:6px;overflow:hidden;border:1px solid var(--subtle);}
+.pfill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent-light),var(--accent));transition:width .5s;}
+.plabel{font-size:0.8em;color:var(--muted);white-space:nowrap;}
+/* question grid */
+.qtitle{font-size:1.15em;color:var(--text);font-weight:600;margin-bottom:4px;}
+.story{color:var(--muted);font-size:0.88em;margin-bottom:14px;}
+.stmt{background:var(--card);border:1px solid var(--subtle);border-radius:10px;padding:12px 14px;margin:10px 0;transition:border-color .3s;}
+.stmt.dup{border-color:var(--error);}
+.stmt .txt{margin-bottom:8px;font-size:0.98em;}
+.freqs{display:flex;gap:6px;flex-wrap:wrap;}
+.freq{flex:1;min-width:84px;background:var(--bg);border:1px solid var(--subtle);color:var(--muted);border-radius:8px;padding:7px 4px;font-size:0.72em;text-align:center;cursor:pointer;transition:all .2s;line-height:1.3;}
+.freq:hover{border-color:var(--accent-light);color:var(--text);}
+.freq.sel{background:var(--accent-light);color:var(--bg);border-color:var(--accent-light);font-weight:700;}
+.warnmsg{display:none;color:var(--error);font-size:0.82em;margin-top:10px;}
+.warnmsg.show{display:block;}
+.feedback{display:none;color:var(--success);font-size:0.9em;margin-top:12px;}
+.feedback.show{display:block;animation:fadein .4s;}
+.navrow{display:flex;justify-content:space-between;margin-top:20px;gap:10px;}
+/* radar */
+.radarbox{display:flex;justify-content:center;margin:6px 0;}
+.axis-chip{display:inline-block;border-radius:8px;padding:2px 10px;font-weight:700;font-size:0.85em;margin-right:6px;}
+.score-row{display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--subtle);padding:10px 4px;cursor:pointer;}
+.score-row:last-child{border-bottom:none;}
+.score-row .val{font-size:1.4em;font-weight:800;min-width:52px;text-align:right;}
+.score-row .name{font-weight:600;min-width:150px;}
+.score-row .hint{font-size:0.8em;color:var(--muted);}
+.score-note{display:none;font-size:0.85em;background:var(--bg);border-left:3px solid var(--accent);padding:8px 12px;margin:4px 0 8px;border-radius:0 8px 8px 0;}
+.score-note.open{display:block;}
+.privacy{background:rgba(123,158,107,0.12);border:1.5px solid var(--success);border-radius:10px;padding:14px 16px;margin:16px 0;}
+.privacy h3{color:var(--success);margin-top:0;}
+.privacy li{font-size:0.88em;}
+ul{padding-left:1.3em;}
+.vision{opacity:0.85;border-style:dashed;}
+.tagchip{display:inline-block;background:var(--bg);border:1px solid var(--accent);color:var(--accent);border-radius:20px;padding:3px 14px;font-size:0.82em;margin:2px 4px 2px 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="demobar">Demo 體驗版（本機檔案，未上線）：題目取自 NETS-AE 版原問卷、一字未動；結果頁以江昱德 2026-07-09 實測資料為例；解析文字為版面示意，正式版將接 Vincent 原版解析文字庫。</div>
+
+<!-- S0 landing -->
+<div class="screen active" id="s0">
+  <h1>發現你的人際風格<br>拿到一張「教別人怎麼跟你合作」的說明書</h1>
+  <p>每個人都有自己的溝通頻率。NETS 是陳明勇 Vincent 顧問二十年、數十家企業實測的人際風格測評，現在升級成 AI 互動版。</p>
+  <div class="card">
+    <ul>
+      <li>約 10 分鐘，直覺作答，沒有對錯</li>
+      <li>答完立刻看到你的風格雷達圖，每個數字都有白話解釋</li>
+      <li>AI 解讀內容出自 Vincent 的原版解析文字庫，可溯源</li>
+      <li>想更深入，可預約 Vincent 真人一對一解讀</li>
+    </ul>
+  </div>
+  <div class="privacy">
+    <h3>這份資料誰看得到</h3>
+    <ul>
+      <li>測驗結果<b>預設只有你自己看得到</b></li>
+      <li>只有你主動選擇分享，才會用於團隊或商會的合作分析</li>
+      <li>你可以隨時要求刪除自己的資料</li>
+      <li>本測驗為個人發展與溝通參考，<b>不用於招募淘汰或能力評分</b></li>
+    </ul>
+  </div>
+  <button class="btn" onclick="go('s1')">開始體驗（Demo 節選 3 題）</button>
+  <p class="muted" style="margin-top:10px;">正式版共 22 題。作答方式：每題四句話，依照符合你的頻率排序，四句不能選同一個頻率。</p>
+</div>
+
+<!-- S1-S3 questions injected by JS -->
+<div class="screen" id="s1"></div>
+<div class="screen" id="s2"></div>
+<div class="screen" id="s3"></div>
+
+<!-- S4 transition -->
+<div class="screen" id="s4">
+  <h2>Demo 到此先跳個關</h2>
+  <p>正式版會答完 22 題＋職涯適性問卷，系統自動計分。Demo 直接帶你看一份<b>真實的結果頁</b>：以江昱德 2026-07-09 的實測資料為例。</p>
+  <button class="btn" onclick="go('s5');drawRadar();">看結果頁範例</button>
+</div>
+
+<!-- S5 result -->
+<div class="screen" id="s5">
+  <h1>江昱德 的人際風格說明書</h1>
+  <p class="muted">測驗日期 2026-07-09｜NETS-AE 個人行為模式＋NETS-II 職涯適性</p>
+
+  <div class="card">
+    <div class="radarbox"><svg id="radar" width="340" height="340" viewBox="0 0 340 340"></svg></div>
+    <div style="text-align:center;">
+      <span class="axis-chip" style="background:rgba(255,138,101,.15);color:var(--n);">N 掌控駕馭 61</span>
+      <span class="axis-chip" style="background:rgba(255,213,79,.15);color:var(--e);">E 表現 48</span>
+      <span class="axis-chip" style="background:rgba(129,212,250,.15);color:var(--t);">T 分析 66</span>
+      <span class="axis-chip" style="background:rgba(165,214,167,.15);color:var(--s);">S 平易 62</span>
+    </div>
+    <p class="muted" style="text-align:center;margin-top:6px;">職涯適性定位：策略型（V=34, H=35）</p>
+  </div>
+
+  <div class="card">
+    <h3>每個數字是什麼意思（點一下展開）</h3>
+    <div class="score-row" onclick="toggleNote(this)"><span class="val" style="color:var(--t);">66</span><span class="name">T 分析</span><span class="hint">你的最高分 ▾</span></div>
+    <div class="score-note">【示意文字，正式版接 Vincent 文字庫】T 分數高的人重視證據與條理，決定前會先把事情研究清楚。跟你合作的人，給你完整的資料勝過給你熱情的口號。</div>
+    <div class="score-row" onclick="toggleNote(this)"><span class="val" style="color:var(--s);">62</span><span class="name">S 平易</span><span class="hint">第二高 ▾</span></div>
+    <div class="score-note">【示意文字】S 分數高的人重視關係的穩定，習慣先聽再說。跟你合作的人，不要用突襲式的變動逼你表態。</div>
+    <div class="score-row" onclick="toggleNote(this)"><span class="val" style="color:var(--n);">61</span><span class="name">N 掌控駕馭</span><span class="hint">緊追在後 ▾</span></div>
+    <div class="score-note">【示意文字】N 分數高的人目標感強、能拍板。當方向不明時，你會是站出來定調的人。</div>
+    <div class="score-row" onclick="toggleNote(this)"><span class="val" style="color:var(--e);">48</span><span class="name">E 表現</span><span class="hint">相對低 ▾</span></div>
+    <div class="score-note">【示意文字】E 分數相對低，表示你不靠舞台感經營關係，社交是選擇性的。跟你合作的人，用一對一深談會比大場面更有效。</div>
+  </div>
+
+  <div class="card">
+    <h3>AI 組稿的「跟我合作指南」（節選示意）</h3>
+    <p style="font-size:0.92em;">「跟這個人開會，先給資料再給結論；他沉默不代表沒意見，是在分析。要他快速拍板可以，但要先讓他看過數據。」</p>
+    <p class="muted">正式版：AI 從 Vincent 的解析文字庫依分數組稿，每段標注出處，Vincent 專業把關後發出。</p>
+  </div>
+
+  <div class="privacy">
+    <h3>這份報告誰看得到</h3>
+    <ul>
+      <li>目前：只有你</li>
+      <li>你可以選擇分享給：指定的隊友／你的主管／商會媒合系統（皆可撤回）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>想聽 Vincent 本人怎麼解讀你？</h3>
+    <p style="font-size:0.92em;">單人報告免費完整提供。真人一對一解讀、團隊 Team Scan 組合分析，由 Vincent 親自服務。</p>
+    <button class="btn">預約真人解讀（Demo 示意按鈕）</button>
+  </div>
+
+  <div class="card vision">
+    <h3>願景預告（尚未開發）</h3>
+    <p style="font-size:0.9em;">數位商會版：你同意分享後，約人合作前系統先告訴雙方「你們的風格組合怎麼開場最順」。</p>
+    <span class="tagchip">風格互補分析</span><span class="tagchip">Team Scan 組隊</span><span class="tagchip">合作開場建議</span>
+  </div>
+
+  <div class="navrow">
+    <button class="btn btn-ghost" onclick="location.reload()">回到開頭</button>
+  </div>
+</div>
+</div>
+
+<script>
+// ===== 原題資料（NETS-AE 版問卷，題目與選項一字不動）=====
+var QUESTIONS=[
+ {no:1,title:"當您的朋友以一句話來形容您時，他們會說：",
+  story:"第 1 關｜先從別人眼中的你開始。",
+  opts:["要求完美。","熱情洋溢。","溫和斯文。","蠻霸道的。"]},
+ {no:4,title:"那一種形容，最能表現您決策的特色：",
+  story:"第 2 關｜換個場景：要做決定的時候。",
+  opts:["果敢的，能接受挑戰。","處世謹慎小心，重數據分析。","注重關係，不擅作主。","憑好惡，快速決定。"]},
+ {no:8,title:"以下的溝通方式，那一項最符合您：",
+  story:"第 3 關｜最後看看你怎麼跟人說話。",
+  opts:["表情豐富，常搭配多種肢體語言。","先聽別人意見，有時會表達自己的一點意見。","不露感情的，理多於情，愛分析，較冷靜。","較權威式、直接了當主張自己論點。"]}
+];
+var FREQS=["A 從未如此 0%","B 很少如此 20%","C 偶爾 50%","D 經常如此 80%","E 必定如此 100%"];
+var answers=[{},{},{}];
+
+QUESTIONS.forEach(function(q,qi){
+  var sc=document.getElementById('s'+(qi+1));
+  var html='<div class="progress"><div class="ptrack"><div class="pfill" style="width:'+((qi)/3*100)+'%"></div></div><span class="plabel">'+(qi+1)+' / 3（正式版 22 題）</span></div>';
+  html+='<p class="story">'+q.story+'</p>';
+  html+='<p class="qtitle">Q'+q.no+'｜'+q.title+'</p>';
+  html+='<p class="muted">四句話各選一個頻率，四句不能重複同一個頻率。</p>';
+  q.opts.forEach(function(opt,oi){
+    html+='<div class="stmt" id="st'+qi+'_'+oi+'"><div class="txt">'+opt+'</div><div class="freqs">';
+    FREQS.forEach(function(f,fi){
+      html+='<div class="freq" onclick="pick('+qi+','+oi+','+fi+',this)">'+f+'</div>';
+    });
+    html+='</div></div>';
+  });
+  html+='<div class="warnmsg" id="warn'+qi+'">同一題裡有兩句話選了相同頻率，請調整成四個不同頻率（跟正式問卷規則相同）。</div>';
+  html+='<div class="feedback" id="fb'+qi+'">✓ 這一關完成！你的直覺就是最好的答案。</div>';
+  html+='<div class="navrow"><button class="btn btn-ghost" onclick="go(\'s'+(qi===0?0:qi)+'\')">上一步</button>';
+  html+='<button class="btn" id="next'+qi+'" disabled onclick="go(\'s'+(qi+2>3?4:qi+2)+'\')">下一關</button></div>';
+  sc.innerHTML=html;
+});
+
+function pick(qi,oi,fi,el){
+  answers[qi][oi]=fi;
+  var stmt=document.getElementById('st'+qi+'_'+oi);
+  stmt.querySelectorAll('.freq').forEach(function(b){b.classList.remove('sel');});
+  el.classList.add('sel');
+  validate(qi);
+}
+function validate(qi){
+  var vals=Object.values(answers[qi]);
+  var picked=Object.keys(answers[qi]).length;
+  var dup=false,seen={};
+  for(var k in answers[qi]){
+    var v=answers[qi][k];
+    if(seen[v]!==undefined){dup=true;
+      document.getElementById('st'+qi+'_'+k).classList.add('dup');
+      document.getElementById('st'+qi+'_'+seen[v]).classList.add('dup');
+    } else {seen[v]=k;}
+  }
+  if(!dup){for(var j=0;j<4;j++){var s=document.getElementById('st'+qi+'_'+j);if(s)s.classList.remove('dup');}}
+  document.getElementById('warn'+qi).classList.toggle('show',dup);
+  var ok=(picked===4&&!dup);
+  document.getElementById('next'+qi).disabled=!ok;
+  document.getElementById('fb'+qi).classList.toggle('show',ok);
+}
+function go(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function toggleNote(row){
+  var note=row.nextElementSibling;
+  note.classList.toggle('open');
+}
+// ===== 雷達圖：江昱德實測八點（N, ne, E, es, S, st, T, te），滿分 100 =====
+function drawRadar(){
+  var svg=document.getElementById('radar');
+  if(svg.dataset.done)return; svg.dataset.done=1;
+  var cx=170,cy=170,R=130;
+  var vals=[61,37.99,48,38.26,62,45.21,66,44.83]; // N ne E es S st T te
+  var labels=["N","","E","","S","","T",""];
+  var colors={0:"#FF8A65",2:"#FFD54F",4:"#A5D6A7",6:"#81D4FA"};
+  var ns="http://www.w3.org/2000/svg";
+  function pt(i,r){var a=-Math.PI/2+i*Math.PI/4;return[cx+r*Math.cos(a),cy+r*Math.sin(a)];}
+  // grid rings
+  [25,50,75,100].forEach(function(g){
+    var d="";for(var i=0;i<8;i++){var p=pt(i,R*g/100);d+=(i?"L":"M")+p[0]+","+p[1];}d+="Z";
+    var path=document.createElementNS(ns,"path");
+    path.setAttribute("d",d);path.setAttribute("fill","none");
+    path.setAttribute("stroke","#5D3A2A");path.setAttribute("stroke-width",g===100?1.5:0.7);
+    svg.appendChild(path);
+  });
+  // axes
+  for(var i=0;i<8;i++){var p=pt(i,R);
+    var line=document.createElementNS(ns,"line");
+    line.setAttribute("x1",cx);line.setAttribute("y1",cy);
+    line.setAttribute("x2",p[0]);line.setAttribute("y2",p[1]);
+    line.setAttribute("stroke","#5D3A2A");line.setAttribute("stroke-width",0.7);
+    svg.appendChild(line);
+  }
+  // polygon
+  var d="";for(var i=0;i<8;i++){var p=pt(i,R*vals[i]/100);d+=(i?"L":"M")+p[0]+","+p[1];}d+="Z";
+  var poly=document.createElementNS(ns,"path");
+  poly.setAttribute("d",d);poly.setAttribute("fill","rgba(230,184,125,0.25)");
+  poly.setAttribute("stroke","#E6B87D");poly.setAttribute("stroke-width",2.5);
+  poly.setAttribute("stroke-linejoin","round");
+  svg.appendChild(poly);
+  // main axis dots + labels
+  for(var i=0;i<8;i+=2){
+    var p=pt(i,R*vals[i]/100);
+    var c=document.createElementNS(ns,"circle");
+    c.setAttribute("cx",p[0]);c.setAttribute("cy",p[1]);c.setAttribute("r",5);
+    c.setAttribute("fill",colors[i]);svg.appendChild(c);
+    var lp=pt(i,R+18);
+    var t=document.createElementNS(ns,"text");
+    t.setAttribute("x",lp[0]);t.setAttribute("y",lp[1]+5);
+    t.setAttribute("text-anchor","middle");t.setAttribute("fill",colors[i]);
+    t.setAttribute("font-size","16");t.setAttribute("font-weight","800");
+    t.textContent=labels[i]+" "+vals[i];
+    svg.appendChild(t);
+  }
+  // strategy point (V=34,H=35) as small marker near center
+  var sp=document.createElementNS(ns,"circle");
+  sp.setAttribute("cx",cx+ (34/100)*R*0.35);sp.setAttribute("cy",cy-(35/100)*R*0.35);
+  sp.setAttribute("r",4);sp.setAttribute("fill","#FF6F6F");
+  svg.appendChild(sp);
+  var st=document.createElementNS(ns,"text");
+  st.setAttribute("x",cx+(34/100)*R*0.35+8);st.setAttribute("y",cy-(35/100)*R*0.35+4);
+  st.setAttribute("fill","#FF6F6F");st.setAttribute("font-size","11");
+  st.textContent="策略 35,34";
+  svg.appendChild(st);
+}
+</script>
+</body>
+</html>
