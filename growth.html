@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<title>情境領導 × NETS：加入前的判斷、加入後的成長（Demo）</title>
+<style>
+:root{
+  --bg:#352118; --text:#FFF8DC; --accent:#E6B87D; --accent-light:#D4A574;
+  --card:#4A2C1F; --subtle:#5D3A2A; --muted:#A08060; --paper:#FAF7EE;
+  --cN:#C7402E; --cE:#D89B12; --cS:#3F8F63; --cT:#2F6FAE;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;}
+.wrap{max-width:920px;margin:0 auto;padding:26px 18px 90px;}
+h1{color:var(--accent);font-size:1.55em;letter-spacing:-0.3px;line-height:1.35;}
+h2{color:var(--accent);font-size:1.28em;margin:42px 0 12px;border-top:1px solid var(--subtle);padding-top:14px;}
+h3{color:var(--accent-light);font-size:1.02em;margin:14px 0 6px;}
+p,li{opacity:0.92;}
+ul,ol{padding-left:1.3em;}
+.card{background:var(--card);border:1px solid var(--subtle);border-radius:12px;padding:16px 20px;margin:12px 0;}
+.tip{background:rgba(230,184,125,0.09);border:2px solid var(--accent);border-radius:8px;padding:12px 16px;margin:12px 0;}
+.hl{color:var(--accent);font-weight:600;}
+.muted{color:var(--muted);font-size:0.85em;}
+.demobar{background:rgba(230,184,125,0.12);border:1px dashed var(--accent);border-radius:8px;padding:8px 14px;font-size:0.8em;color:var(--accent);margin:14px 0;}
+.btn{display:inline-block;background:var(--accent-light);color:var(--bg);border:none;border-radius:10px;padding:11px 24px;font-weight:700;cursor:pointer;text-decoration:none;font-size:0.9em;}
+.ghost{background:transparent;color:var(--accent-light);border:1.5px solid var(--accent-light);}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:0.86em;border-radius:8px;overflow:hidden;}
+th{background:var(--accent);color:var(--bg);padding:9px 10px;text-align:left;font-weight:600;}
+td{background:var(--card);border-bottom:1px solid var(--subtle);padding:8px 10px;line-height:1.55;vertical-align:top;}
+/* 4x4 matrix */
+.matrix{display:grid;grid-template-columns:110px repeat(4,1fr);gap:5px;margin:14px 0;}
+.mx{border-radius:8px;padding:9px 8px;font-size:0.78em;text-align:center;}
+.mxh{background:var(--accent);color:var(--bg);font-weight:700;display:flex;align-items:center;justify-content:center;}
+.mxr{background:var(--card);border:1px solid var(--subtle);font-weight:700;display:flex;align-items:center;justify-content:center;}
+.cell{background:var(--card);border:1.5px solid var(--subtle);cursor:pointer;transition:all .2s;line-height:1.45;}
+.cell:hover{border-color:var(--accent);transform:translateY(-1px);}
+.cell.on{border-color:var(--accent);background:rgba(230,184,125,0.14);}
+#mx-panel{border-left:4px solid var(--accent);}
+#mx-panel .body{white-space:pre-line;font-size:0.9em;}
+.verdict{background:rgba(123,158,107,0.13);border:2px solid #7B9E6B;border-radius:10px;padding:14px 18px;margin:12px 0;}
+.good{color:#9CCC7A;}
+.bad{color:#FF8A80;}
+a{color:var(--accent);}
+@media(max-width:700px){.matrix{grid-template-columns:74px repeat(4,1fr);}.mx{font-size:0.68em;padding:7px 4px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>情境領導 × NETS<br><span style="font-size:0.72em;color:var(--muted);">加入前：這個團隊我該不該進？加入後：我怎麼融入、怎麼長？</span></h1>
+<div class="demobar">Demo 說明：情境領導四階段架構整理自 Vincent 2026-07-09 口述（階段名稱以 Vincent 定版為準，D3 名稱待確認）；所有格子內容為規則式推演示意，判讀邏輯由 Vincent 審定。案例：江昱德實測資料。</div>
+<p><a class="btn" href="manage.html">← 管理工具頁</a> <a class="btn ghost" href="index.html">提案首頁</a></p>
+
+<h2>零、為什麼要把兩套接起來</h2>
+<div class="card">
+<p><b>情境領導</b>把每個人當人才看：任何人接一份新工作，都會走過四個發展階段（新人 → 挫折的學習者 → 能幹但謹慎的貢獻者<span class="muted">（名稱待 Vincent 定版）</span> → 頂尖高手），領導者要依部屬「現在在第幾階段」換領導方式（指導 → 教練 → 支持 → 授權），不是一招打天下。因人發展，就是因材施教。</p>
+<p style="margin-top:8px;"><b>但情境領導有一個缺口：</b>它假設同一階段的人都長一樣。實際上，同樣是新人，不同特質的人投入狀態、行為展現、需要的支持差異極大。安靜觀察的 S 型新人常被誤判成「不投入」，先讀完所有文件才動手的 T 型新人常被誤判成「太慢」。</p>
+<p style="margin-top:8px;"><span class="hl">NETS 補的就是這個缺口：情境領導給「階段」（時間軸），NETS 給「特質」（個別化），交叉出 4×4＝16 種支持劇本，才是真正的因材施教。</span></p>
+</div>
+
+<h2>一、4 特質 × 4 階段：點格子看支持劇本</h2>
+<p class="muted">直排＝NETS 特質，橫排＝發展階段。每格：這種人在這個階段的典型樣子＋容易被誤判成什麼＋適合的帶法。點一下展開。</p>
+<div class="matrix" id="matrix"></div>
+<div class="card" id="mx-panel"><h3 id="mx-title">點任何一格看劇本</h3><div class="body" id="mx-body">例如：點「T × 挫折的學習者」，看看為什麼對 T 型人打氣沒有用。</div></div>
+
+<h2>二、加入前：我該不該進這個團隊（五個檢查）</h2>
+<p class="muted">以「江昱德要不要加入團隊模擬頁那個四人團隊」為例走一遍。</p>
+<table>
+<tr><th>檢查</th><th>問法</th><th>江昱德 × 示範團隊（推演示意）</th></tr>
+<tr><td>1. 蛋肉測試</td><td>他們要我做的事，是我的蛋還是肉？</td><td>要我做「分析中樞＋品質把關」→ T66 是蛋 <b class="good">✓</b>；若要我扛第一線對外招募 → E48 是肉 <b class="bad">✗</b></td></tr>
+<tr><td>2. 缺口對照</td><td>我補的是團隊缺口，還是跟人重疊搶位？</td><td>團隊疊圖缺 T 的深度（只有老陳 T70 但他還兼 S 的活）→ 補缺口 <b class="good">✓</b>；N 跟阿豪重疊 → 進場前講好不搶拍板 <b class="bad">⚠</b></td></tr>
+<tr><td>3. 階段對照</td><td>這任務對我是 D 幾？團隊給得起我需要的支持嗎？</td><td>「AI 知識庫導入」對江是 D4（頂尖高手）→ 需要的是授權，不是指導。若團隊習慣事事回報 → 會互相消耗 <b class="bad">⚠</b></td></tr>
+<tr><td>4. 割肉環境測試</td><td>這環境會不會長期逼我用他我硬撐？</td><td>若會議文化是「大聲的人贏」→ 江要天天用練出來的 N 硬撐（長期割肉）；若有書面提案文化 → T 出蛋 <b class="good">✓</b></td></tr>
+<tr><td>5. 拒絕的出口</td><td>不加入或部分加入，怎麼說不失禮？</td><td>用 NETS 語言拒絕：「這個位置需要的是 E 的蛋，我出的會是肉，長期對團隊不划算。我可以用 T 支援 X 跟 Y。」拒絕變成專業判斷，不是人情問題。</td></tr>
+</table>
+<div class="verdict"><p><b>示範判定：</b>適合加入，帶三個條件進場：① 位置定在分析中樞不扛對外第一線 ② 跟阿豪先講好拍板分工（他 A 我 C）③ 爭取書面提案文化。<span class="muted">（推演示意：正式版由本人與團隊確認）</span></p></div>
+
+<h2>三、加入後：融入與持續成長（以江昱德為例）</h2>
+<p class="muted">同一個人在不同任務上處於不同階段，所以這是「每項任務一條成長線」，不是給人貼一個階段標籤。</p>
+<table>
+<tr><th>任務</th><th>目前階段</th><th>需要的支持（依 T/S 本我調整）</th><th>下一階段的觸發條件</th></tr>
+<tr><td>AI 知識庫導入</td><td>D4 頂尖高手</td><td>授權＋技術決策權，別逼他寫進度回報流水帳</td><td>—（可轉帶人）</td></tr>
+<tr><td>對外提案簡報</td><td>D3 能幹但謹慎</td><td>T 的卡點是完美主義：幫他定義「夠好就發布」的標準，並公開背書</td><td>連續三次準時發布 → D4</td></tr>
+<tr><td>商會媒合營運</td><td>D2 挫折的學習者</td><td>對 T 型人：打氣沒用，給他一次成功的小驗證（一組配對成功案例）</td><td>第一個成功案例 → D3</td></tr>
+<tr><td>帶新人</td><td>D1 新人</td><td>T 型 D1 要完整資料包＋示範案例；讓他先觀摩 Vincent 帶一次</td><td>獨立帶完一人 → D2~D3</td></tr>
+</table>
+<div class="tip"><p><span class="hl">給主管（或給 AI 教練）的用法：</span>每項任務標階段 → 查 4×4 劇本表 → 用對的方式帶。部屬感受到的是「他懂我」，主管省下的是誤判成本：把 S 型的安靜當不投入、把 T 型的謹慎當太慢、把 N 型的不耐煩當態度差、把 E 型的熱情驟降當正常，這四種誤判每天都在發生。</p></div>
+
+<h2>四、跟整條管線的關係（整合，不是分支）</h2>
+<div class="card">
+<p>現在整套系統是三個軸：</p>
+<ul>
+<li><b>NETS 特質</b>＝你是誰（靜態）</li>
+<li><b>成本矩陣＋ARCI/OGSM/甘特</b>＝此刻怎麼分工（空間）</li>
+<li><b>情境領導 × NETS</b>＝你在每份工作的第幾階段、怎麼長（時間）</li>
+</ul>
+<p style="margin-top:8px;">三軸共用同一批人、同一份測評。所以是同一個產品的第三塊拼圖，不開新專案；未來若要把「主管教練工具」單獨賣給企業，再從這裡拆產品殼，知識同源。</p>
+<p style="margin-top:8px;"><span class="hl">對 Vincent：</span>NETS（他的測評）×情境領導（他熟的管理理論）×AI（自動查表出劇本），等於把他兩套課程資產疊成一個別人抄不走的工具。</p>
+</div>
+
+<p style="margin-top:26px;"><a class="btn" href="team.html">團隊互動模擬</a> <a class="btn" href="manage.html">管理工具頁</a> <a class="btn ghost" href="index.html">提案首頁</a></p>
+<p class="muted" style="margin-top:18px;">NETS 測評：陳明勇 Vincent｜情境領導整合構想：Vincent 口述、江昱德 × AI 整理（2026-07-09）</p>
+</div>
+
+<script>
+var TRAITS=[
+ {k:"N",name:"N 駕馭",color:"#C7402E"},
+ {k:"E",name:"E 表現",color:"#D89B12"},
+ {k:"S",name:"S 平易",color:"#3F8F63"},
+ {k:"T",name:"T 分析",color:"#2F6FAE"}
+];
+var STAGES=["D1 新人","D2 挫折的學習者","D3 能幹但謹慎*","D4 頂尖高手"];
+var CELLS={
+ N:[
+ "【樣子】想直接上場，嫌完整教學囉嗦，急著要戰場。\n【易被誤判】態度傲慢、不受教。\n【帶法】給一個邊界清楚的小戰場＋明確的成敗標準，別給長篇 SOP。指導要短、狠、準。",
+ "【樣子】挫折表現成不耐煩，想換題目、想換戰場，開始質疑方向。\n【易被誤判】沒定性、愛抱怨。\n【帶法】把挫折翻譯成挑戰：「這關就是難，破了你就升級。」給他對手，不是給他安慰。",
+ "【樣子】能力已足，開始要頭銜、要決定權，沒有就意興闌珊。\n【易被誤判】權力慾太重。\n【帶法】給實質授權範圍（哪些事不用問就能決定），把「要位子」轉成「扛責任」。",
+ "【樣子】獨當一面，開始看下一座山。\n【風險】沒有新戰場就外找（跳槽、另起爐灶）。\n【帶法】授權＋新戰場＋讓他開疆闢土，把他的野心變成組織的擴張。"],
+ E:[
+ "【樣子】熱情爆棚、到處認識人、什麼都想試。\n【易被誤判】不專注。\n【帶法】給有舞台感的入門任務＋即時回饋，讓他的熱情第一週就被看見。",
+ "【樣子】熱情驟降、變安靜、不再主動發言——這對 E 型是重大警訊。\n【易被誤判】終於穩定下來了（其實是快熄火）。\n【帶法】公開肯定＋把他拉回人群：安排一個需要他連結大家的角色，熱情是他的氧氣。",
+ "【樣子】能力夠了，需要舞台確認自己的價值。\n【易被誤判】愛出風頭。\n【帶法】讓他帶新人、對外分享、當團隊的臉。他在台上發光，團隊在台下收人。",
+ "【樣子】自帶影響力，人脈與聲量都是資產。\n【風險】舞台不夠大就去別的舞台。\n【帶法】給品牌級舞台（代表組織對外），把個人魅力轉成組織資產。"],
+ S:[
+ "【樣子】安靜觀察、不敢問問題、先配合再說。\n【易被誤判】不投入、沒想法（最常見的誤判）。\n【帶法】主動排一位 buddy＋固定一對一 check-in，他不會來找你，你要去找他。",
+ "【樣子】自我歸因（都是我不好）、默默硬撐、不求救。\n【易被誤判】沒事，他看起來很穩。\n【帶法】主動察覺＋一對一減壓，把「你做錯什麼」全部改成「流程哪裡可以幫你」。",
+ "【樣子】能力足夠但不敢承擔當責（A），習慣站在支援位。\n【易被誤判】沒企圖心。\n【帶法】漸進交付＋公開背書：「這件事他當責，我全力支持。」他需要的是被授權的安全感。",
+ "【樣子】團隊的定海神針，人人信任。\n【風險】被視為理所當然，默默耗損。\n【帶法】穩定深耕＋受尊重的顧問位，定期明確表達感謝——S 型的 D4 是用「被珍惜」留住的。"],
+ T:[
+ "【樣子】先讀完所有文件才肯動手，進度看起來慢。\n【易被誤判】太慢、想太多。\n【帶法】給完整資料包＋一個示範案例，他弄懂系統後速度會反超所有人。",
+ "【樣子】把挫折歸因「資訊不足」，無限蒐集資料，遲遲不出手。\n【易被誤判】拖延。\n【帶法】打氣沒有用。給他一次成功的小驗證（小範圍、可檢核、必成的任務），用證據重建信心。",
+ "【樣子】能力夠但完美主義卡住發布，永遠覺得還差一點。\n【易被誤判】效率差。\n【帶法】跟他一起定義「夠好」的客觀標準（驗收清單），標準達到就發布，由主管扛剩餘風險。",
+ "【樣子】領域權威，判斷精準。\n【風險】被雜事淹沒，或因不愛爭而被邊緣化。\n【帶法】給技術決策權＋研究空間，幫他擋行政雜事；重大決策一定先問過他。"]
+};
+var grid=document.getElementById('matrix');
+function add(cls,txt,style){var d=document.createElement('div');d.className='mx '+cls;d.textContent=txt;if(style)Object.assign(d.style,style);grid.appendChild(d);return d;}
+add('mxh','特質＼階段');
+STAGES.forEach(function(s){add('mxh',s);});
+TRAITS.forEach(function(t){
+  add('mxr',t.name,{color:t.color,borderColor:t.color});
+  STAGES.forEach(function(s,si){
+    var preview=CELLS[t.k][si].split("\n")[0].replace("【樣子】","");
+    var c=add('cell',preview.slice(0,20)+"…");
+    c.onclick=function(){
+      document.querySelectorAll('.cell').forEach(function(x){x.classList.remove('on');});
+      c.classList.add('on');
+      document.getElementById('mx-title').textContent=t.name+" × "+s;
+      document.getElementById('mx-title').style.color=t.color;
+      document.getElementById('mx-body').textContent=CELLS[t.k][si]+"\n\n（推演示意，判讀邏輯由 Vincent 定版）";
+      if(window.innerWidth<700)document.getElementById('mx-panel').scrollIntoView({behavior:'smooth',block:'nearest'});
+    };
+  });
+});
+</script>
+</body>
+</html>
