@@ -122,6 +122,7 @@ ul{padding-left:1.3em;}
       <span class="axis-chip" style="background:rgba(165,214,167,.15);color:var(--s);">S 平易 62</span>
     </div>
     <p class="muted" style="text-align:center;margin-top:6px;">職涯適性定位：策略型（V=34, H=35）</p>
+    <p style="text-align:center;margin-top:10px;"><a class="btn btn-ghost" style="text-decoration:none;" href="chart.html">🗺 看完整版 NETS 圖（每個點、線、方位都有解釋）</a></p>
   </div>
 
   <div class="card">
@@ -246,7 +247,8 @@ function drawRadar(){
   var labels=["N","","E","","S","","T",""];
   var colors={0:"#FF8A65",2:"#FFD54F",4:"#A5D6A7",6:"#81D4FA"};
   var ns="http://www.w3.org/2000/svg";
-  function pt(i,r){var a=-Math.PI/2+i*Math.PI/4;return[cx+r*Math.cos(a),cy+r*Math.sin(a)];}
+  // 方位照原圖：N 左上(135°)、ne 上、E 右上(45°)、es 右、S 右下(-45°)、st 下、T 左下(-135°)、te 左
+  function pt(i,r){var a=(135-i*45)*Math.PI/180;return[cx+r*Math.cos(a),cy-r*Math.sin(a)];}
   // grid rings
   [25,50,75,100].forEach(function(g){
     var d="";for(var i=0;i<8;i++){var p=pt(i,R*g/100);d+=(i?"L":"M")+p[0]+","+p[1];}d+="Z";
@@ -284,13 +286,14 @@ function drawRadar(){
     t.textContent=labels[i]+" "+vals[i];
     svg.appendChild(t);
   }
-  // strategy point (V=34,H=35) as small marker near center
+  // strategy point：水平35、垂直34（笛卡兒座標，中心為原點）
+  var spx=cx+(35/100)*R, spy=cy-(34/100)*R;
   var sp=document.createElementNS(ns,"circle");
-  sp.setAttribute("cx",cx+ (34/100)*R*0.35);sp.setAttribute("cy",cy-(35/100)*R*0.35);
-  sp.setAttribute("r",4);sp.setAttribute("fill","#FF6F6F");
+  sp.setAttribute("cx",spx);sp.setAttribute("cy",spy);
+  sp.setAttribute("r",4.5);sp.setAttribute("fill","#FF6F6F");
   svg.appendChild(sp);
   var st=document.createElementNS(ns,"text");
-  st.setAttribute("x",cx+(34/100)*R*0.35+8);st.setAttribute("y",cy-(35/100)*R*0.35+4);
+  st.setAttribute("x",spx+8);st.setAttribute("y",spy+4);
   st.setAttribute("fill","#FF6F6F");st.setAttribute("font-size","11");
   st.textContent="策略 35,34";
   svg.appendChild(st);

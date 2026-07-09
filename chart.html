@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<title>NETS 人際風格與特質圖｜完整互動版</title>
+<style>
+:root{
+  --bg:#352118; --text:#FFF8DC; --accent:#E6B87D; --accent-light:#D4A574;
+  --card:#4A2C1F; --subtle:#5D3A2A; --muted:#A08060;
+  --paper:#FAF7EE; --ink:#3a3126;
+  --cN:#C7402E; --cE:#D89B12; --cS:#3F8F63; --cT:#2F6FAE;
+  --self:#2E5FA3; --social:#E8821E; --strategy:#CC1F1F;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.65;}
+.top{max-width:1200px;margin:0 auto;padding:20px 16px 6px;}
+h1{color:var(--accent);font-size:1.45em;letter-spacing:-0.3px;}
+.top p{color:var(--muted);font-size:0.85em;}
+.layout{max-width:1200px;margin:0 auto;padding:10px 16px 70px;display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:14px;}
+@media(max-width:980px){
+  .layout{grid-template-columns:1fr;padding-bottom:42vh;}
+  .panel{position:fixed;bottom:0;left:0;right:0;top:auto;max-height:38vh;border-radius:14px 14px 0 0;z-index:50;box-shadow:0 -6px 18px rgba(0,0,0,0.5);}
+}
+.chartbox{background:var(--paper);border-radius:14px;padding:6px;box-shadow:0 4px 14px rgba(0,0,0,0.4);}
+svg{width:100%;height:auto;display:block;}
+.panel{background:var(--card);border:1px solid var(--subtle);border-radius:14px;padding:16px 18px;align-self:start;position:sticky;top:12px;max-height:92vh;overflow-y:auto;}
+.panel h2{color:var(--accent);font-size:1.05em;margin-bottom:8px;}
+.panel .body{font-size:0.88em;opacity:0.93;white-space:pre-line;}
+.panel .hintline{color:var(--muted);font-size:0.78em;margin-top:12px;border-top:1px solid var(--subtle);padding-top:8px;}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+.ctl{background:var(--card);border:1px solid var(--subtle);color:var(--text);border-radius:20px;padding:5px 14px;font-size:0.8em;cursor:pointer;user-select:none;}
+.ctl.on{background:var(--accent-light);color:var(--bg);border-color:var(--accent-light);font-weight:700;}
+.tabs{display:flex;gap:8px;margin:12px 0 4px;flex-wrap:wrap;}
+.tab{background:transparent;border:1.5px solid var(--accent-light);color:var(--accent-light);border-radius:10px;padding:8px 18px;font-size:0.9em;cursor:pointer;font-weight:600;}
+.tab.on{background:var(--accent-light);color:var(--bg);}
+.view{display:none;}
+.view.on{display:block;}
+canvas{width:100%;border-radius:14px;display:block;background:#0d0a14;}
+.btn{display:inline-block;background:var(--accent-light);color:var(--bg);border:none;border-radius:10px;padding:10px 22px;font-weight:700;cursor:pointer;text-decoration:none;font-size:0.9em;}
+.foot{max-width:1200px;margin:0 auto;padding:0 16px 40px;color:var(--muted);font-size:0.78em;}
+/* svg interactive */
+.hot{cursor:pointer;}
+.hot:hover{filter:brightness(1.12);}
+.hotzone{fill:transparent;}
+.hotzone:hover{fill:rgba(230,184,125,0.10);}
+text{user-select:none;}
+.growbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;}
+.gchip{border-radius:10px;padding:6px 12px;font-size:0.82em;background:var(--card);border:1px solid var(--subtle);}
+a{color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>NETS 人際風格與特質圖｜完整互動版</h1>
+  <p>案例：江昱德 2026-07-09 實測｜底圖編製：林金根｜NETS 繪製：陳明勇 Vincent｜互動網頁重製：江昱德 × AI</p>
+  <div class="tabs">
+    <button class="tab on" data-v="v1">經典完整圖</button>
+    <button class="tab" data-v="v2">本我 → 他我 成長動畫</button>
+    <button class="tab" data-v="v3">星軌實驗室</button>
+    <a class="btn" style="margin-left:auto;" href="index.html">回提案首頁</a>
+  </div>
+</div>
+
+<div class="layout">
+<div>
+  <!-- VIEW 1 -->
+  <div class="view on" id="v1">
+    <div class="controls">
+      <span class="ctl on" data-layer="social">🟧 他我（社會化後）</span>
+      <span class="ctl on" data-layer="self">🟦 本我</span>
+      <span class="ctl on" data-layer="strategy">🔴 策略點</span>
+      <span class="ctl on" data-layer="words">🔤 特質詞（完整）</span>
+    </div>
+    <div class="chartbox"><svg id="nets" viewBox="0 0 940 940"></svg></div>
+  </div>
+  <!-- VIEW 2 -->
+  <div class="view" id="v2">
+    <div class="growbar" id="growchips"></div>
+    <div class="chartbox"><svg id="nets2" viewBox="0 0 940 940"></svg></div>
+    <p style="margin-top:8px;"><button class="btn" id="replay">▶ 重播成長動畫</button></p>
+  </div>
+  <!-- VIEW 3 -->
+  <div class="view" id="v3">
+    <canvas id="orbit" width="900" height="900"></canvas>
+    <p class="hintline" style="color:var(--muted);font-size:0.8em;margin-top:8px;">實驗性視圖，靈感來自「人際場力學」的行星比喻：軌道半徑＝他我分數（社會化後展現的幅度）、星球大小＝本我分數（天生傾向的份量）、紅色衛星＝策略點（目前工作處境的對外定位）。點一下星球看說明。</p>
+  </div>
+</div>
+
+<!-- INFO PANEL -->
+<div class="panel">
+  <h2 id="p-title">怎麼看這張圖</h2>
+  <div class="body" id="p-body">這張圖有兩個框、一顆點：
+
+🟦 藍色小框＝「本我」：比較接近天生的人際特質風格。
+🟧 橘色大框＝「他我」：別人眼中的我。經過社會化調整、策略調整之後，在人際互動時展現出來的特質。
+🔴 紅點＝「策略點」：在目前工作特性下，實際站的位置。
+
+四個角是四種基本特質：
+N（左上）目標導向、主導。E（右上）表現、熱情。S（右下）溫和、內斂。T（左下）分析、嚴謹。
+四邊中點是相鄰兩型的混合傾向，所以背後其實是八個座標。
+
+滑鼠移到（或手指點）圖上任何一個角、點、線、字，右邊這格就會告訴你它是什麼意思。</div>
+  <div class="hintline">提示：hover／點擊 = 看解釋；上方開關 = 顯示或隱藏圖層；換分頁 = 動畫與實驗視圖。</div>
+</div>
+</div>
+
+<div class="foot">
+  <p>本頁為提案討論用 Demo，資料為江昱德本人實測（NETS-AE 2026-07-07、NETS-II 2026-07-08）。解析語句整理自 Vincent 2026-07-09 口述解讀。測驗題目、底圖與解析內容版權屬原作者。</p>
+</div>
+
+<script>
+/* ================= 資料 ================= */
+// 八點順序：N(左上135°) ne(上90°) E(右上45°) es(右0°) S(右下-45°) st(下-90°) T(左下-135°) te(左180°)
+var ORDER=["N","ne","E","es","S","st","T","te"];
+var ANG=[135,90,45,0,-45,-90,-135,180];
+var SOCIAL={N:61,ne:37.99,E:48,es:38.26,S:62,st:45.21,T:66,te:44.83}; // 他我（總分）
+var SELF ={N:10,ne:8.49,E:15,es:14.85,S:35,st:26.40,T:40,te:11.31};   // 本我（次數×5，取自 Excel I 欄）
+var STRAT={x:35,y:34}; // 水平35 垂直34
+var CX=470,CY=470,S=300; // 外框半邊長
+var COLORS={N:"#C7402E",E:"#D89B12",S:"#3F8F63",T:"#2F6FAE"};
+
+/* 每個元素的解釋（右側面板） */
+var INFO={
+ N:{t:"N｜駕馭型（左上）",b:"太陽九・駕馭。目標導向、主導的特質。\n關鍵詞：獨立、主控、開創、果斷、致知、堅定。\n領導風格：策略領導。工作屬性：管理性工作（把事做對）。\n口訣：What（真相）→ 知識。信心：直接了當、不解人意。\n過度使用時：強迫。\n\n江昱德：本我 n=2（×5=10，四型中最小）→ 他我 N=61。成長幅度最大：可能透過自我訓練或工作要求，對「目標導向」這件事有大量學習成長，展現幅度比較大。"},
+ E:{t:"E｜表現型（右上）",b:"少陽八・表現。表現、熱情的特質。\n關鍵詞：激情、魅力、樂觀、誠意、慷慨、同感。\n領導風格：願景領導。工作屬性：挑戰性工作（把人做好、揚善）。\n口訣：人脈 ← Who（誰）。熱心：活潑生動、不拘小節。\n過度使用時：攻擊。\n\n江昱德：本我 e=3（×5=15）→ 他我 E=48。也有成長，只是幅度沒有 N 那麼大。"},
+ S:{t:"S｜平易型（右下）",b:"太陰六・平易。溫和、內斂的特質。\n關鍵詞：定靜、正心、真誠、悲憫、放鬆、友善。\n領導風格：價值取向的支援。工作屬性：支援性工作（把人做對、革心）。\n口訣：健康 ← Why（原因）。耐心：溫和說話、不擅作主。\n過度使用時：遷就。\n\n江昱德：本我 s=7（×5=35，第二大）→ 他我 S=62。順著原本的特質自然成長，沒有特別突出。"},
+ T:{t:"T｜分析型（左下）",b:"少陰七・分析。分析、嚴謹的特質。\n關鍵詞：完美、審慎、勤勞、負責、明智、格物、PDCA。\n領導風格：品質領導。工作屬性：分析性工作（把事做好、改善）。\n口訣：How（作法）→ 財富。小心：專業訴求、不動感情。\n過度使用時：閃避。\n\n江昱德：本我 t=8（×5=40，四型中最大）→ 他我 T=66。本我最強的軸，順勢成長。"},
+ ne:{t:"N–E 之間（上）｜前瞻 × 互動的交界",b:"相鄰兩型的混合傾向點（八座標之一）。靠外向側。\n這一帶的詞：成長、主動、前衛、平天下、激進、治國、轉型領導。\n江昱德：他我 38.0／本我 8.5。"},
+ es:{t:"E–S 之間（右）｜人際側",b:"相鄰兩型的混合傾向點（八座標之一）。P（美）EQ 學習型這一側：判斷受情感的影響較大，人際取向、同理心、包容、體諒、人性領導。\n江昱德：他我 38.3／本我 14.8。"},
+ st:{t:"S–T 之間（下）｜執行 × 關懷的交界",b:"相鄰兩型的混合傾向點（八座標之一）。靠內向側。\n這一帶的詞：傳統、修身、穩定、後動、自重、自省、價值領導。\n江昱德：他我 45.2／本我 26.4。"},
+ te:{t:"T–N 之間（左）｜知識側",b:"相鄰兩型的混合傾向點（八座標之一）。K（真）IQ 知識型這一側：判斷受理智的影響較大，事理取向、客觀、系統化流程化、專注紀律、技術領導。\n江昱德：他我 44.8／本我 11.3。"},
+ self:{t:"🟦 藍色小框＝本我",b:"比較接近「天生的人際特質風格」。\n計算方式：22 題中，每一型的敘述被你排到最高頻率的次數（n/e/s/t），放大五倍畫在圖上。\n\n江昱德的本我：n=2、e=3、s=7、t=8。\n解讀（Vincent）：本我是比較內斂、嚴謹分析的，對外公關或主導型比較弱。"},
+ social:{t:"🟧 橘色大框＝他我",b:"「他人眼中的我」。經過社會化調整、策略調整之後，在人際互動情況下展現出來的特質。\n計算方式：22 題 × 4 選項的頻率分數，按四型加總。\n\n江昱德的他我：N=61、E=48、T=66、S=62。\n解讀（Vincent）：跟本我相比，看得出他一直在調適自己、應對周遭環境。N 成長最多（目標導向是練出來的），E 也有成長，S、T 順著本我的底子自然成長。"},
+ strategy:{t:"🔴 紅點＝策略點（35, 34）",b:"NETS-II 職涯適性問卷算出來的目前工作定位（水平 35、垂直 34）。\n\n解讀（Vincent）：在目前的工作特性之下，江昱德展現的位置偏「對外公關、對外表達、對外交涉」（往 E 的方向偏）：他必須把自己展現出來、讓外界知道他可以做什麼，而不是只在自己的空間裡做自己的事。但沒有突出到橘色框之外，還在自己可控的範圍之內。"},
+ q_fore:{t:"前瞻（左上象限）",b:"N 與外向側交會的區域：面向未來、開創、變革的能量。這一帶的詞：果斷、堅定、開創、致知。"},
+ q_inter:{t:"互動（右上象限）",b:"E 與外向側交會的區域：面向人群、連結、感染力的能量。這一帶的詞：慷慨、同感、誠意、魅力。"},
+ q_exec:{t:"執行（左下象限）",b:"T 與內向側交會的區域：把事做完、做對、做精的能量。這一帶的詞：負責、明智、審慎、勤勞、穩定。"},
+ q_care:{t:"關懷（右下象限）",b:"S 與內向側交會的區域：照顧人、維繫關係的能量。這一帶的詞：友善、放鬆、真誠、悲憫。"},
+ side_out:{t:"上｜外向",b:"說得多、做得多。行動、執行力、高風險、天時。用心看（觀）光波。運用社會行為功能來溝通（AQ 服務型）。轉型領導。"},
+ side_in:{t:"下｜內向",b:"問得多、寫得多。意志、意志力、低風險、地利。用心聽（音）聲波。保衛、組織、記憶感知。運用文化信息功能來溝通（MQ 誠信型）。價值領導。"},
+ side_k:{t:"左｜K（真）IQ 知識型",b:"陽。智慧力、理智。判斷受「理智」的影響較大。數字的魔力。\n上半：策略。下半：規劃。\n真假、客觀、事理取向；事實、技術領導。"},
+ side_p:{t:"右｜P（美）EQ 學習型",b:"陰。情緒、道德力。判斷受「情感」的影響較大。人性的魅力。\n人際、人性；好惡、主觀、人際取向；情境、人性領導。"},
+ ring25:{t:"中心區（25 分格線內）",b:"核心區的詞：愛、感覺、強調平等、妥協、情境領導。\n過度使用的警訊詞（中心四方向）：依賴、冷漠、不羈、暴躁。\n內圈：激進／治國／自主／自足（上）、自重／保守／自省／齊家／傳統／修身／穩定／後動（下）。"},
+ ring50:{t:"50 分格線（四角警語）",b:"每一型「過度使用」時的樣子，標在 50 分格線四角：\n強迫（N 過度）、攻擊（E 過度）、閃避（T 過度）、遷就（S 過度）。\n特質是能量，用過頭就變成阻力。"},
+ grid:{t:"方形格線",b:"由內到外是 25、50、75、100 的方形刻度環。八個座標的值畫在各自的方向上，離中心越遠代表該特質展現越強。"}
+};
+
+/* ================= 幾何 ================= */
+function pt(angDeg, v){ // v: 0-100，方形環刻度
+  var a=angDeg*Math.PI/180;
+  var c=Math.cos(a), s=Math.sin(a);
+  var B=S/Math.max(Math.abs(c),Math.abs(s)); // 到方形邊界距離
+  var r=v/100*B;
+  return [CX+r*c, CY-r*s];
+}
+function polyPath(vals){
+  var d="";
+  for(var i=0;i<8;i++){var p=pt(ANG[i],vals[ORDER[i]]);d+=(i?"L":"M")+p[0].toFixed(1)+","+p[1].toFixed(1);}
+  return d+"Z";
+}
+var NS="http://www.w3.org/2000/svg";
+function el(svg,tag,attrs,txt){
+  var e=document.createElementNS(NS,tag);
+  for(var k in attrs)e.setAttribute(k,attrs[k]);
+  if(txt!=null)e.textContent=txt;
+  svg.appendChild(e);return e;
+}
+function showInfo(key){
+  var i=INFO[key];if(!i)return;
+  document.getElementById('p-title').textContent=i.t;
+  document.getElementById('p-body').textContent=i.b;
+}
+function hook(e,key){
+  e.classList.add('hot');
+  e.addEventListener('pointerenter',function(){showInfo(key);});
+  e.addEventListener('click',function(){showInfo(key);});
+}
+
+/* ================= 畫底圖 ================= */
+function drawBase(svg){
+  // 太極底
+  var g=el(svg,"g",{opacity:0.35});
+  el(g,"circle",{cx:CX,cy:CY,r:S-4,fill:"#efece2"});
+  var tp=el(g,"path",{fill:"#d3d0c6",d:
+    "M "+CX+" "+(CY-(S-4))+
+    " A "+(S-4)+" "+(S-4)+" 0 0 1 "+CX+" "+(CY+(S-4))+
+    " A "+((S-4)/2)+" "+((S-4)/2)+" 0 0 1 "+CX+" "+CY+
+    " A "+((S-4)/2)+" "+((S-4)/2)+" 0 0 0 "+CX+" "+(CY-(S-4))+" Z",
+    transform:"rotate(45 "+CX+" "+CY+")"});
+  el(g,"circle",{cx:CX+(S-4)/2*Math.cos(Math.PI/4),cy:CY-(S-4)/2*Math.sin(Math.PI/4),r:34,fill:"#efece2"});
+  el(g,"circle",{cx:CX-(S-4)/2*Math.cos(Math.PI/4),cy:CY+(S-4)/2*Math.sin(Math.PI/4),r:34,fill:"#d3d0c6"});
+  // 格線環（方形 25/50/75/100）
+  [25,50,75,100].forEach(function(v){
+    var e2=el(svg,"rect",{x:CX-S*v/100,y:CY-S*v/100,width:2*S*v/100,height:2*S*v/100,
+      fill:"none",stroke:v===100?"#6b6154":"#b7ae9d","stroke-width":v===100?2.2:(v===50?1.4:0.8)});
+    hook(e2, v===25?"ring25":(v===50?"ring50":"grid"));
+  });
+  el(svg,"text",{x:CX+8,y:CY+S*0.25+16,"font-size":13,fill:"#8a8071"},"25");
+  // 米字
+  [[135,-45],[45,-135],[90,-90],[0,180]].forEach(function(pair){
+    var p1=pt(pair[0],100),p2=pt(pair[1],100);
+    el(svg,"line",{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:"#8f8676","stroke-width":1});
+  });
+  // 象限大字
+  var qs=[["前瞻",CX-S*0.42,CY-S*0.55,"q_fore"],["互動",CX+S*0.42,CY-S*0.55,"q_inter"],
+          ["執行",CX-S*0.42,CY+S*0.60,"q_exec"],["關懷",CX+S*0.42,CY+S*0.60,"q_care"]];
+  qs.forEach(function(q){
+    var t=el(svg,"text",{x:q[1],y:q[2],"text-anchor":"middle","font-size":30,fill:"#9a9182","font-weight":700,opacity:0.85},q[0]);
+    hook(t,q[3]);
+  });
+  // 四邊標示
+  var sides=[["外 向",CX,CY-S-26,"side_out"],["內 向",CX,CY+S+34,"side_in"]];
+  sides.forEach(function(sd){
+    var t=el(svg,"text",{x:sd[1],y:sd[2],"text-anchor":"middle","font-size":20,fill:"#6b6154","font-weight":700},sd[0]);
+    hook(t,sd[3]);
+  });
+  var lk=el(svg,"text",{x:CX-S-58,y:CY-6,"text-anchor":"middle","font-size":26,fill:"#2F6FAE","font-weight":800},"K 真");
+  el(svg,"text",{x:CX-S-58,y:CY+18,"text-anchor":"middle","font-size":12,fill:"#6b6154"},"IQ 知識型");
+  hook(lk,"side_k");
+  var rp=el(svg,"text",{x:CX+S+58,y:CY-6,"text-anchor":"middle","font-size":26,fill:"#C7822E","font-weight":800},"P 美");
+  el(svg,"text",{x:CX+S+58,y:CY+18,"text-anchor":"middle","font-size":12,fill:"#6b6154"},"EQ 學習型");
+  hook(rp,"side_p");
+  el(svg,"text",{x:CX-S-58,y:CY-S*0.5,"text-anchor":"middle","font-size":15,fill:"#6b6154"},"策略");
+  el(svg,"text",{x:CX-S-58,y:CY+S*0.5,"text-anchor":"middle","font-size":15,fill:"#6b6154"},"規劃");
+  el(svg,"text",{x:CX+S+58,y:CY-S*0.5,"text-anchor":"middle","font-size":15,fill:"#6b6154"},"人際");
+  el(svg,"text",{x:CX+S+58,y:CY+S*0.5,"text-anchor":"middle","font-size":15,fill:"#6b6154"},"人性");
+  // 四角特質標題
+  var corners=[
+    ["N",CX-S-2,CY-S-52,"start","駕馭｜1 革命・把事做對","管理性工作・策略領導"],
+    ["E",CX+S+2,CY-S-52,"end","表現｜2 揚善・把人做好","挑戰性工作・願景領導"],
+    ["S",CX+S+2,CY+S+52,"end","平易｜3 革心・把人做對","支援性工作・耐心溫和"],
+    ["T",CX-S-2,CY+S+52,"start","分析｜4 改善・把事做好","分析性工作・品質領導"]
+  ];
+  corners.forEach(function(c){
+    var g2=el(svg,"g",{});
+    var big=el(g2,"text",{x:c[1],y:c[2],"text-anchor":c[3],"font-size":34,fill:COLORS[c[0]],"font-weight":800},c[0]);
+    el(g2,"text",{x:c[1],y:c[2]+22,"text-anchor":c[3],"font-size":13.5,fill:COLORS[c[0]],"font-weight":600},c[4]);
+    el(g2,"text",{x:c[1],y:c[2]+40,"text-anchor":c[3],"font-size":12,fill:"#6b6154"},c[5]);
+    hook(g2,c[0]);
+  });
+  // 特質詞（可開關圖層）
+  var W=el(svg,"g",{id:"words-layer"});
+  function w(ang,v,txt,color,size){
+    var p=pt(ang,v);
+    return el(W,"text",{x:p[0],y:p[1],"text-anchor":"middle","font-size":size||11.5,fill:color||"#7d7466"},txt);
+  }
+  // 對角特質詞（各型由外而內）
+  w(135,88,"獨立",COLORS.N);w(135,76,"主控",COLORS.N);w(135,64,"開創",COLORS.N);w(135,53,"果斷",COLORS.N);w(129,47,"堅定",COLORS.N,12);w(141,44,"強迫","#c98a1e");
+  w(45,88,"激情",COLORS.E);w(45,76,"魅力",COLORS.E);w(45,64,"樂觀",COLORS.E);w(45,53,"慷慨",COLORS.E);w(51,47,"攻擊","#c98a1e",12);w(39,58,"同感",COLORS.E);
+  w(-45,88,"正心",COLORS.S);w(-45,76,"放鬆",COLORS.S);w(-45,64,"友善",COLORS.S);w(-45,53,"真誠",COLORS.S);w(-51,47,"遷就","#c98a1e",12);w(-39,58,"定靜",COLORS.S);
+  w(-135,88,"完美",COLORS.T);w(-135,76,"審慎",COLORS.T);w(-135,64,"負責",COLORS.T);w(-135,53,"明智",COLORS.T);w(-129,47,"閃避","#c98a1e",12);w(-141,58,"勤勞",COLORS.T);
+  // 邊中線詞
+  w(90,84,"成長","#7d7466");w(90,72,"主動","#7d7466");w(90,60,"前衛","#7d7466");w(90,40,"激進・治國","#a35c5c");w(90,28,"自主・自足","#7d7466");
+  w(-90,84,"傳統","#7d7466");w(-90,72,"修身","#7d7466");w(-90,60,"穩定・後動","#7d7466");w(-90,40,"自重・保守","#7d7466");w(-90,28,"自省・齊家","#7d7466");
+  w(180,84,"系統化",'#5a748c');w(180,72,"流程化",'#5a748c');w(180,60,"專注・紀律",'#5a748c');w(180,42,"適應・穩當","#7d7466");
+  w(0,84,"同理心",'#8c7a5a');w(0,72,"包容",'#8c7a5a');w(0,60,"體諒",'#8c7a5a');w(0,42,"合作・和諧","#7d7466");
+  // 中心詞
+  el(W,"text",{x:CX,y:CY-8,"text-anchor":"middle","font-size":15,fill:"#a35c5c","font-weight":700},"愛・感覺");
+  el(W,"text",{x:CX,y:CY+12,"text-anchor":"middle","font-size":10.5,fill:"#7d7466"},"強調平等・妥協・情境領導");
+  el(W,"text",{x:CX,y:CY+28,"text-anchor":"middle","font-size":10,fill:"#a35c5c"},"依賴｜冷漠｜不羈｜暴躁");
+  hook(W,"ring25");
+  // 底部署名
+  el(svg,"text",{x:CX-S,y:CY+S+92,"font-size":12,fill:"#8a8071"},"林金根 編製 NETS 底圖");
+  el(svg,"text",{x:CX,y:CY+S+92,"text-anchor":"middle","font-size":12,fill:"#8a8071"},"江昱德（案例）");
+  el(svg,"text",{x:CX+S,y:CY+S+92,"text-anchor":"end","font-size":12,fill:"#8a8071"},"陳明勇 繪製");
+}
+
+/* ================= 畫資料層 ================= */
+function drawData(svg,animateFrom){
+  // 他我
+  var gSoc=el(svg,"g",{id:"layer-social"});
+  var soc=el(gSoc,"path",{d:polyPath(animateFrom||SOCIAL),fill:"rgba(232,130,30,0.13)",stroke:"#E8821E","stroke-width":3.5,"stroke-linejoin":"round"});
+  hook(gSoc,"social");
+  // 本我
+  var gSelf=el(svg,"g",{id:"layer-self"});
+  var slf=el(gSelf,"path",{d:polyPath(SELF),fill:"rgba(46,95,163,0.10)",stroke:"#2E5FA3","stroke-width":2.5,"stroke-linejoin":"round","stroke-dasharray":"none"});
+  hook(gSelf,"self");
+  // 頂點與數字
+  ORDER.forEach(function(k,i){
+    var p=pt(ANG[i],SOCIAL[k]);
+    var isMain=(k===k.toUpperCase());
+    var dot=el(gSoc,"circle",{cx:p[0],cy:p[1],r:isMain?7:4.5,fill:isMain?COLORS[k]:"#E8821E",stroke:"#fff","stroke-width":1.5});
+    hook(dot,k);
+    if(isMain){
+      var off=[[ -16,-12],[16,-12],[16,18],[-16,18]][["N","E","S","T"].indexOf(k)];
+      var lb=el(gSoc,"text",{x:p[0]+off[0],y:p[1]+off[1],"text-anchor":"middle","font-size":19,"font-weight":800,fill:COLORS[k]},k+" "+SOCIAL[k]);
+      hook(lb,k);
+    } else {
+      var lb2=el(gSoc,"text",{x:p[0],y:p[1]-9,"text-anchor":"middle","font-size":11,fill:"#b06a18"},k+" "+SOCIAL[k].toFixed(1));
+      hook(lb2,k);
+    }
+    var p2=pt(ANG[i],SELF[k]);
+    var dot2=el(gSelf,"circle",{cx:p2[0],cy:p2[1],r:isMain?5:3.5,fill:"#2E5FA3",stroke:"#fff","stroke-width":1.2});
+    hook(dot2,isMain?"self":k);
+    if(isMain){
+      var lb3=el(gSelf,"text",{x:p2[0],y:p2[1]+((k==="S"||k==="T")?18:-10),"text-anchor":"middle","font-size":12,"font-weight":700,fill:"#2E5FA3"},k.toLowerCase()+" "+Math.round(SELF[k]/5));
+      hook(lb3,"self");
+    }
+  });
+  // 策略點
+  var gStr=el(svg,"g",{id:"layer-strategy"});
+  var sx=CX+STRAT.x/100*S, sy=CY-STRAT.y/100*S;
+  el(gStr,"circle",{cx:sx,cy:sy,r:11,fill:"#CC1F1F",opacity:0.25});
+  var sd=el(gStr,"circle",{cx:sx,cy:sy,r:7,fill:"#CC1F1F",stroke:"#fff","stroke-width":1.5});
+  var sl=el(gStr,"text",{x:sx+14,y:sy+4,"font-size":13,"font-weight":700,fill:"#CC1F1F"},"策略 35, 34");
+  hook(gStr,"strategy");
+  return {soc:soc};
+}
+
+/* ================= View 1 ================= */
+var svg1=document.getElementById('nets');
+drawBase(svg1);
+drawData(svg1);
+// 圖層開關
+document.querySelectorAll('#v1 .ctl').forEach(function(c){
+  c.addEventListener('click',function(){
+    c.classList.toggle('on');
+    var on=c.classList.contains('on');
+    var map={social:"layer-social",self:"layer-self",strategy:"layer-strategy",words:"words-layer"};
+    var target=svg1.querySelector('#'+map[c.dataset.layer]);
+    if(target)target.style.display=on?"":"none";
+  });
+});
+
+/* ================= View 2 成長動畫 ================= */
+var svg2=document.getElementById('nets2');
+drawBase(svg2);
+var d2=drawData(svg2);
+var chips=[["N 駕馭","10 → 61","成長幅度最大：目標導向是練出來的",COLORS.N],
+           ["E 表現","15 → 48","有成長，幅度次之",COLORS.E],
+           ["S 平易","35 → 62","順著本我的底子自然成長",COLORS.S],
+           ["T 分析","40 → 66","本我最強的軸，順勢成長",COLORS.T]];
+var gc=document.getElementById('growchips');
+chips.forEach(function(c){
+  var div=document.createElement('div');div.className='gchip';
+  div.innerHTML='<b style="color:'+c[3]+'">'+c[0]+'</b>　<b>'+c[1]+'</b><br><span style="font-size:0.85em;opacity:0.75;">'+c[2]+'</span>';
+  gc.appendChild(div);
+});
+function animateGrow(){
+  var t0=null,DUR=2200;
+  function frame(ts){
+    if(!t0)t0=ts;
+    var t=Math.min(1,(ts-t0)/DUR);
+    var ease=1-Math.pow(1-t,3);
+    var cur={};
+    ORDER.forEach(function(k){cur[k]=SELF[k]+(SOCIAL[k]-SELF[k])*ease;});
+    d2.soc.setAttribute('d',polyPath(cur));
+    if(t<1)requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+document.getElementById('replay').addEventListener('click',animateGrow);
+
+/* ================= View 3 星軌 ================= */
+var canvas=document.getElementById('orbit'),ctx=canvas.getContext('2d');
+var planets=[
+ {k:"N",name:"N 駕馭",orbit:61,size:10,color:"#FF7A5C",ang:3*Math.PI/4,speed:0.0011},
+ {k:"E",name:"E 表現",orbit:48,size:15,color:"#FFD54F",ang:Math.PI/4,speed:0.0016},
+ {k:"S",name:"S 平易",orbit:62,size:35,color:"#7FD6A4",ang:-Math.PI/4,speed:0.0009},
+ {k:"T",name:"T 分析",orbit:66,size:40,color:"#7EC3F2",ang:-3*Math.PI/4,speed:0.0007}
+];
+var orbitRunning=false;
+function orbitLoop(){
+  if(!document.getElementById('v3').classList.contains('on')){orbitRunning=false;return;}
+  var W=canvas.width,H=canvas.height,cx=W/2,cy=H/2,R=W/2-80;
+  ctx.clearRect(0,0,W,H);
+  // 星空
+  ctx.fillStyle="#0d0a14";ctx.fillRect(0,0,W,H);
+  for(var i=0;i<70;i++){
+    var x=(i*97)%W,y=(i*211)%H;
+    ctx.fillStyle="rgba(255,255,255,"+(0.15+(i%5)*0.05)+")";
+    ctx.fillRect(x,y,1.6,1.6);
+  }
+  // 中心：本我核心
+  var grad=ctx.createRadialGradient(cx,cy,4,cx,cy,46);
+  grad.addColorStop(0,"#FFF3D6");grad.addColorStop(1,"rgba(230,184,125,0)");
+  ctx.fillStyle=grad;ctx.beginPath();ctx.arc(cx,cy,46,0,7);ctx.fill();
+  ctx.fillStyle="#E6B87D";ctx.font="bold 15px sans-serif";ctx.textAlign="center";
+  ctx.fillText("我",cx,cy+5);
+  planets.forEach(function(p){
+    var r=p.orbit/100*R;
+    ctx.strokeStyle="rgba(255,255,255,0.14)";ctx.lineWidth=1;
+    ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.stroke();
+    p.ang+=p.speed*8;
+    var x=cx+r*Math.cos(p.ang),y=cy-r*Math.sin(p.ang);
+    var pr=5+p.size/100*26;
+    var g2=ctx.createRadialGradient(x,y,1,x,y,pr*2.2);
+    g2.addColorStop(0,p.color);g2.addColorStop(1,"rgba(0,0,0,0)");
+    ctx.fillStyle=g2;ctx.beginPath();ctx.arc(x,y,pr*2.2,0,7);ctx.fill();
+    ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(x,y,pr,0,7);ctx.fill();
+    ctx.fillStyle="#0d0a14";ctx.font="bold "+(pr>13?13:10)+"px sans-serif";
+    ctx.fillText(p.k,x,y+4);
+    ctx.fillStyle="rgba(255,248,220,0.85)";ctx.font="12px sans-serif";
+    ctx.fillText(p.name+"  軌道"+p.orbit+"｜質量"+Math.round(p.size/5),x,y-pr-8);
+    p._x=x;p._y=y;p._r=pr;
+  });
+  // 策略衛星
+  var sx=cx+35/100*R, sy=cy-34/100*R;
+  ctx.fillStyle="#FF5252";ctx.beginPath();ctx.arc(sx,sy,6,0,7);ctx.fill();
+  ctx.fillStyle="rgba(255,82,82,0.9)";ctx.font="12px sans-serif";
+  ctx.fillText("策略點 35,34",sx,sy-12);
+  requestAnimationFrame(orbitLoop);
+}
+canvas.addEventListener('click',function(ev){
+  var rect=canvas.getBoundingClientRect();
+  var x=(ev.clientX-rect.left)*canvas.width/rect.width;
+  var y=(ev.clientY-rect.top)*canvas.height/rect.height;
+  planets.forEach(function(p){
+    if(p._x&&Math.hypot(x-p._x,y-p._y)<p._r+14)showInfo(p.k);
+  });
+});
+
+/* ================= Tabs ================= */
+document.querySelectorAll('.tab').forEach(function(tb){
+  if(!tb.dataset.v)return;
+  tb.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(function(t){if(t.dataset.v)t.classList.remove('on');});
+    document.querySelectorAll('.view').forEach(function(v){v.classList.remove('on');});
+    tb.classList.add('on');
+    document.getElementById(tb.dataset.v).classList.add('on');
+    if(tb.dataset.v==='v2'){setTimeout(animateGrow,150);}
+    if(tb.dataset.v==='v3'&&!orbitRunning){orbitRunning=true;requestAnimationFrame(orbitLoop);}
+  });
+});
+</script>
+</body>
+</html>
