@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="description" content="NETS 特質與人際風格評測系統，文森原始願景版介紹頁。">
+  <title>NETS 特質與人際風格評測系統｜文森原始願景版</title>
+  <style>
+    :root {
+      --paper: #f7f3ea;
+      --paper-2: #fffdf8;
+      --ink: #2e2a24;
+      --ink-soft: #625b50;
+      --muted: #7c7467;
+      --line: #dcd3c3;
+      --line-soft: #ebe4d8;
+      --accent: #8b6b42;
+      --n: #b84032;
+      --e: #cc8d0b;
+      --s: #3f815c;
+      --t: #2f679d;
+      --shadow: 0 18px 48px rgba(58, 47, 33, 0.10);
+      --radius: 22px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 4%, rgba(184, 64, 50, 0.07), transparent 26rem),
+        radial-gradient(circle at 94% 20%, rgba(204, 141, 11, 0.07), transparent 28rem),
+        var(--paper);
+      font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      font-size: 17px;
+      line-height: 1.78;
+    }
+
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { font: inherit; }
+    :focus-visible { outline: 3px solid rgba(47, 103, 157, 0.45); outline-offset: 4px; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(247, 243, 234, 0.92);
+      border-bottom: 1px solid rgba(220, 211, 195, 0.86);
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-family: "Noto Serif TC", "Songti TC", serif;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      color: var(--accent);
+      font-size: 0.82rem;
+      letter-spacing: 0;
+    }
+
+    .main-nav {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .main-nav a {
+      color: var(--ink-soft);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .main-nav a:hover { color: var(--accent); }
+    .nav-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      margin-left: auto;
+      padding: 9px;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      margin: 5px auto;
+      border-radius: 2px;
+      background: var(--ink);
+      transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .version-strip {
+      border-bottom: 1px solid var(--line-soft);
+      background: rgba(255, 253, 248, 0.68);
+    }
+
+    .version-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 9px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .version-inner::-webkit-scrollbar { display: none; }
+    .version-label { color: var(--muted); font-size: 0.78rem; white-space: nowrap; }
+    .version-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 5px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink-soft);
+      background: var(--paper-2);
+      text-decoration: none;
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .version-pill.active {
+      border-color: var(--accent);
+      color: var(--paper-2);
+      background: var(--accent);
+    }
+
+    .section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 104px 24px;
+    }
+
+    .section.compact { padding-top: 72px; padding-bottom: 72px; }
+    .section-wide { border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+    .section-wide.paper { background: rgba(255, 253, 248, 0.72); }
+    .section-wide.warm { background: #eee7da; }
+
+    .hero {
+      min-height: 700px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+      gap: 70px;
+      align-items: center;
+      padding-top: 82px;
+      padding-bottom: 92px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 22px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before { content: ""; width: 34px; height: 1px; background: currentColor; }
+    h1, h2, h3 { font-family: "Noto Serif TC", "Songti TC", serif; }
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(2.7rem, 5.4vw, 5rem);
+      font-weight: 600;
+      line-height: 1.16;
+      letter-spacing: -0.045em;
+    }
+
+    h1 span { color: var(--accent); }
+    .hero-lead {
+      max-width: 690px;
+      margin: 28px 0 0;
+      color: var(--ink-soft);
+      font-size: clamp(1.08rem, 1.8vw, 1.3rem);
+    }
+
+    .hero-note { margin: 18px 0 0; color: var(--muted); font-size: 0.9rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 11px 21px;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      color: #fffdf8;
+      background: var(--accent);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(80, 61, 38, 0.16); }
+    .btn.secondary { color: var(--accent); background: transparent; }
+
+    .hero-visual {
+      position: relative;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+    }
+
+    .hero-visual::before,
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border: 1px solid var(--line);
+      transform: rotate(45deg);
+      z-index: -1;
+    }
+
+    .hero-visual::after { inset: 26%; border-color: rgba(139, 107, 66, 0.32); }
+    .axis-x, .axis-y { position: absolute; background: var(--line); z-index: -1; }
+    .axis-x { width: 90%; height: 1px; }
+    .axis-y { width: 1px; height: 90%; }
+    .core {
+      width: 34%;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: rgba(255, 253, 248, 0.78);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .core strong { display: block; color: var(--accent); font-family: "Noto Serif TC", serif; font-size: 1.65rem; }
+    .core small { color: var(--muted); }
+    .point {
+      position: absolute;
+      width: 74px;
+      height: 74px;
+      display: grid;
+      place-items: center;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      background: var(--paper-2);
+      font-family: "Noto Serif TC", serif;
+      font-size: 2rem;
+      font-weight: 700;
+      box-shadow: 0 12px 28px rgba(58, 47, 33, 0.10);
+    }
+
+    .point.n { top: 4%; left: 4%; color: var(--n); }
+    .point.e { top: 4%; right: 4%; color: var(--e); }
+    .point.s { right: 4%; bottom: 4%; color: var(--s); }
+    .point.t { left: 4%; bottom: 4%; color: var(--t); }
+    .axis-label { position: absolute; color: var(--muted); font-size: 0.78rem; letter-spacing: 0.1em; }
+    .axis-label.top { top: 0; left: 50%; transform: translateX(-50%); }
+    .axis-label.bottom { bottom: 0; left: 50%; transform: translateX(-50%); }
+    .axis-label.left { left: 0; top: 50%; transform: translateY(-50%); }
+    .axis-label.right { right: 0; top: 50%; transform: translateY(-50%); }
+
+    .section-head { max-width: 780px; margin-bottom: 48px; }
+    .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+    h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.45rem); line-height: 1.25; letter-spacing: -0.03em; }
+    .section-intro { margin: 18px 0 0; color: var(--ink-soft); font-size: 1.08rem; }
+    .big-quote {
+      max-width: 900px;
+      margin: 0 auto;
+      font-family: "Noto Serif TC", "Songti TC", serif;
+      font-size: clamp(1.55rem, 3vw, 2.5rem);
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    .big-quote em { color: var(--accent); font-style: normal; }
+    .principle-grid, .value-grid, .prototype-grid, .income-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .principle-grid { grid-template-columns: repeat(4, 1fr); margin-top: 52px; }
+    .value-grid, .prototype-grid { grid-template-columns: repeat(3, 1fr); }
+    .income-grid { grid-template-columns: repeat(5, 1fr); }
+    .framework-flow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .flow-card {
+      position: relative;
+      min-width: 0;
+      padding: 34px 30px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.82);
+    }
+
+    .flow-card:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      top: 50%;
+      right: -20px;
+      z-index: 2;
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--accent);
+      background: var(--paper);
+      transform: translateY(-50%);
+      font-weight: 800;
+    }
+
+    .flow-card .flow-label {
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+    }
+
+    .flow-card h3 { margin: 13px 0 12px; font-size: 1.5rem; }
+    .flow-card p { margin: 0; color: var(--ink-soft); }
+    .flow-card ul { margin: 16px 0 0; padding-left: 1.2em; color: var(--ink-soft); font-size: 0.92rem; }
+    .flow-card.framework { border-top: 6px solid var(--t); }
+    .flow-card.application { border-top: 6px solid var(--e); }
+    .flow-card.enterprise { border-top: 6px solid var(--s); }
+
+    .bridge-line {
+      max-width: 920px;
+      margin: 34px auto 0;
+      padding: 22px 26px;
+      border-radius: 18px;
+      color: var(--ink);
+      background: rgba(139, 107, 66, 0.10);
+      text-align: center;
+      font-family: "Noto Serif TC", "Songti TC", serif;
+      font-size: 1.08rem;
+    }
+    .card {
+      min-width: 0;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.78);
+    }
+
+    .card-index { color: var(--accent); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; }
+    .card h3 { margin: 12px 0 10px; font-size: 1.28rem; line-height: 1.35; }
+    .card p { margin: 0; color: var(--ink-soft); font-size: 0.94rem; }
+    .card ul { margin: 14px 0 0; padding-left: 1.2em; color: var(--ink-soft); font-size: 0.92rem; }
+
+    .chart-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.6fr);
+      gap: 34px;
+      align-items: start;
+    }
+
+    .chart-frame {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: #f7f3ea;
+      box-shadow: var(--shadow);
+    }
+
+    .chart-frame a { display: block; }
+    .chart-caption { padding: 15px 20px 19px; color: var(--muted); font-size: 0.82rem; }
+    .read-list { display: grid; gap: 14px; }
+    .read-item { padding: 20px 22px; border-left: 4px solid var(--accent); background: rgba(255, 253, 248, 0.74); }
+    .read-item:nth-child(1) { border-color: var(--t); }
+    .read-item:nth-child(2) { border-color: var(--e); }
+    .read-item:nth-child(3) { border-color: var(--n); }
+    .read-item strong { display: block; margin-bottom: 5px; font-family: "Noto Serif TC", serif; }
+    .read-item p { margin: 0; color: var(--ink-soft); font-size: 0.9rem; }
+
+    .value-card { position: relative; overflow: hidden; padding-top: 34px; }
+    .value-card::before { content: ""; position: absolute; inset: 0 0 auto; height: 6px; background: var(--accent); }
+    .value-card.personal::before { background: linear-gradient(90deg, var(--t), var(--s)); }
+    .value-card.relation::before { background: linear-gradient(90deg, var(--n), var(--e)); }
+    .value-card.team::before { background: linear-gradient(90deg, var(--n), var(--e), var(--s), var(--t)); }
+
+    .prototype-card { display: flex; flex-direction: column; min-height: 330px; }
+    .prototype-card .icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      color: var(--accent);
+      background: var(--paper);
+      font-size: 1.28rem;
+      font-weight: 800;
+    }
+
+    .prototype-card .card-link {
+      margin-top: auto;
+      padding-top: 22px;
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .prototype-note {
+      margin-top: 22px;
+      padding: 14px 18px;
+      border-radius: 14px;
+      color: var(--ink-soft);
+      background: rgba(139, 107, 66, 0.09);
+      font-size: 0.86rem;
+    }
+
+    .vision {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: 64px;
+      align-items: start;
+    }
+
+    .vision-statement {
+      position: sticky;
+      top: 130px;
+    }
+
+    .vision-statement .quote-mark { color: var(--accent); font-family: Georgia, serif; font-size: 5rem; line-height: 0.7; }
+    .vision-statement blockquote { margin: 18px 0 0; font-family: "Noto Serif TC", serif; font-size: clamp(1.7rem, 3.5vw, 3rem); line-height: 1.5; }
+    .vision-statement p { color: var(--ink-soft); }
+    .income-grid { grid-template-columns: 1fr; }
+    .income-card { display: grid; grid-template-columns: 52px 1fr; gap: 18px; align-items: start; }
+    .income-number {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fffdf8;
+      background: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+
+    .income-card h3 { margin-top: 2px; }
+    .history-note {
+      margin-top: 28px;
+      padding: 22px 24px;
+      border: 1px solid rgba(139, 107, 66, 0.35);
+      border-radius: 18px;
+      color: var(--ink-soft);
+      background: rgba(255, 253, 248, 0.45);
+    }
+
+    .boundary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+    .boundary-list { display: grid; gap: 12px; }
+    .boundary-item { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; }
+    .boundary-item span:first-child { color: var(--s); font-weight: 800; }
+    .boundary-item p { margin: 0; color: var(--ink-soft); }
+
+    .final-cta {
+      padding: 58px;
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      background:
+        linear-gradient(135deg, rgba(184, 64, 50, 0.07), transparent 38%),
+        linear-gradient(315deg, rgba(47, 103, 157, 0.08), transparent 42%),
+        var(--paper-2);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .final-cta h2 { font-size: clamp(2rem, 4vw, 3.3rem); }
+    .final-cta p { max-width: 680px; margin: 18px auto 0; color: var(--ink-soft); }
+    .final-cta .actions { justify-content: center; }
+
+    footer { border-top: 1px solid var(--line); }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 34px 24px 48px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .footer-inner p { margin: 0; max-width: 830px; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 14px; }
+    .footer-links a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 920px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; gap: 46px; }
+      .hero-copy { max-width: 760px; }
+      .hero-visual { width: min(620px, 92vw); margin: 0 auto; }
+      .principle-grid { grid-template-columns: repeat(2, 1fr); }
+      .value-grid, .prototype-grid { grid-template-columns: repeat(2, 1fr); }
+      .framework-flow { grid-template-columns: 1fr; }
+      .flow-card:not(:last-child)::after {
+        top: auto;
+        right: 50%;
+        bottom: -21px;
+        transform: translateX(50%) rotate(90deg);
+      }
+      .prototype-grid .prototype-card:last-child { grid-column: 1 / -1; }
+      .chart-layout, .vision, .boundary-grid { grid-template-columns: 1fr; }
+      .vision-statement { position: static; }
+    }
+
+    @media (max-width: 820px) {
+      .topbar-inner { flex-wrap: wrap; padding: 8px 14px; gap: 8px; }
+      .brand { font-size: 0.94rem; }
+      .brand-mark { width: 31px; height: 31px; }
+      .nav-toggle { display: block; }
+      .main-nav {
+        width: 100%;
+        max-height: 0;
+        margin-left: 0;
+        overflow: hidden;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        transition: max-height 0.3s ease;
+      }
+      .main-nav.open { max-height: 480px; padding-top: 4px; border-top: 1px solid var(--line); }
+      .main-nav a { display: block; padding: 10px 4px; border-bottom: 1px solid var(--line-soft); }
+      .version-inner { padding-left: 14px; padding-right: 14px; }
+      .section { padding-left: 18px; padding-right: 18px; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 16px; }
+      .section { padding-top: 76px; padding-bottom: 76px; }
+      .hero { padding-top: 56px; }
+      h1 { font-size: clamp(2.45rem, 15vw, 3.4rem); }
+      .actions { flex-direction: column; align-items: stretch; }
+      .btn { width: 100%; }
+      .hero-visual { width: 100%; }
+      .point { width: 58px; height: 58px; font-size: 1.6rem; }
+      .core { width: 39%; }
+      .core strong { font-size: 1.35rem; }
+      .axis-label { font-size: 0.7rem; }
+      .principle-grid, .value-grid, .prototype-grid { grid-template-columns: 1fr; }
+      .prototype-grid .prototype-card:last-child { grid-column: auto; }
+      .flow-card { padding: 27px 23px; }
+      .card { padding: 23px; }
+      .chart-caption { padding-left: 15px; padding-right: 15px; }
+      .income-card { grid-template-columns: 42px 1fr; gap: 12px; }
+      .income-number { width: 38px; height: 38px; }
+      .final-cta { padding: 40px 22px; }
+      .footer-inner { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="回到頁首">
+        <span class="brand-mark">NETS</span>
+        <span>特質與人際風格評測系統</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-label="開啟選單" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav" aria-label="主要導覽">
+        <a href="#concept">核心理念</a>
+        <a href="#application">企業應用</a>
+        <a href="#chart">怎麼看圖</a>
+        <a href="#value">應用價值</a>
+        <a href="#vision">文森願景</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="version-strip" aria-label="版本切換">
+    <div class="version-inner">
+      <span class="version-label">目前版本</span>
+      <span class="version-pill active" aria-current="page">文森原始願景版</span>
+      <a class="version-pill" href="../index.html">江江＋文森提案版</a>
+    </div>
+  </div>
+
+  <main id="top">
+    <section class="section hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Vincent's original vision</p>
+        <h1>NETS 看見人<br><span>因人領導力找到帶法</span></h1>
+        <p class="hero-lead">NETS 是文森用來理解個人特質、人際風格與團隊動態的理論及評測框架。因人領導力把這套框架帶進企業，協助主管依不同的人調整溝通、分工、授權、培訓與帶領方式。</p>
+        <p class="hero-note">NETS 研發者：林金根｜NETS 線上施測 2.0 改良、因人領導力企業應用：陳明勇 Vincent</p>
+        <div class="actions">
+          <a class="btn" href="#chart">先看一張實際分析圖</a>
+          <a class="btn secondary" href="#application">看企業怎麼應用</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-label="NETS 四向度示意：N、E、S、T">
+        <span class="axis-x"></span>
+        <span class="axis-y"></span>
+        <span class="axis-label top">外向</span>
+        <span class="axis-label bottom">內向</span>
+        <span class="axis-label left">事理</span>
+        <span class="axis-label right">人際</span>
+        <span class="point n">N</span>
+        <span class="point e">E</span>
+        <span class="point s">S</span>
+        <span class="point t">T</span>
+        <span class="core"><span><strong>NETS</strong><small>動態人際圖</small></span></span>
+      </div>
+    </section>
+
+    <div class="section-wide paper" id="concept">
+      <section class="section compact">
+        <p class="big-quote">人際互動一直在變。NETS 先把差異畫出來，讓我們看見<em>此刻怎麼表現、如何受情境影響</em>；因人領導力再把差異轉成主管可以採取的帶人方法。</p>
+        <div class="principle-grid">
+          <article class="card">
+            <span class="card-index">01｜DYNAMIC</span>
+            <h3>看動態，不貼標籤</h3>
+            <p>評測呈現的是受測者當下的行為取向與人際展現，不替一個人的未來下定論。</p>
+          </article>
+          <article class="card">
+            <span class="card-index">02｜VISUAL</span>
+            <h3>把差異畫出來</h3>
+            <p>透過事理、人際、外向主動與內向穩定兩組向度，讓抽象風格變得容易觀察與討論。</p>
+          </article>
+          <article class="card">
+            <span class="card-index">03｜CONTEXT</span>
+            <h3>把情境放進來</h3>
+            <p>同一個人面對工作、團隊與不同關係時，可能調整自己的展現方式。圖上能看見這些拉動。</p>
+          </article>
+          <article class="card">
+            <span class="card-index">04｜DEVELOP</span>
+            <h3>看見可調整之處</h3>
+            <p>理解優勢、壓力來源與慣用風格後，個人和主管才有具體的學習與帶領起點。</p>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <section class="section" id="application">
+      <div class="section-head center">
+        <p class="eyebrow">Framework to enterprise practice</p>
+        <h2>NETS 是理論框架，因人領導力是企業應用</h2>
+        <p class="section-intro">兩者是同一套方法的前後段。先理解人與團隊的差異，再把理解轉成主管每天用得上的管理行動。</p>
+      </div>
+
+      <div class="framework-flow">
+        <article class="flow-card framework">
+          <span class="flow-label">01｜NETS FRAMEWORK</span>
+          <h3>看見人與團隊</h3>
+          <p>用二維圖像理解個人特質、人際風格、本我、他我、工作位置與團隊動態。</p>
+          <ul>
+            <li>個人風格與壓力來源</li>
+            <li>人際互動與工作適性</li>
+            <li>Team Scan 團隊組合</li>
+          </ul>
+        </article>
+        <article class="flow-card application">
+          <span class="flow-label">02｜PERSON BASED LEADERSHIP</span>
+          <h3>轉成因人帶法</h3>
+          <p>主管依不同成員的風格、任務狀態與發展需求，調整自己的領導回應。</p>
+          <ul>
+            <li>溝通與回饋怎麼說</li>
+            <li>分工與授權怎麼給</li>
+            <li>培訓與輔導怎麼帶</li>
+          </ul>
+        </article>
+        <article class="flow-card enterprise">
+          <span class="flow-label">03｜ENTERPRISE PRACTICE</span>
+          <h3>落進企業現場</h3>
+          <p>把評測結果帶回真實管理情境，形成主管培訓、團隊發展與組織人才應用方案。</p>
+          <ul>
+            <li>主管帶人與績效輔導</li>
+            <li>跨部門溝通與團隊合作</li>
+            <li>人才盤點與訓練規劃</li>
+          </ul>
+        </article>
+      </div>
+      <p class="bridge-line">NETS 提供共同語言與觀察基礎，因人領導力負責把理解轉成企業裡真正做得到的管理行動。</p>
+    </section>
+
+    <section class="section" id="chart">
+      <div class="section-head">
+        <p class="eyebrow">How to read the map</p>
+        <h2>一張圖，同時看見內在傾向、群體展現與工作位置</h2>
+        <p class="section-intro">這張實際案例圖保留 NETS 原有的 N、E、S、T 四個方向，也把本我、他我與策略位置疊在同一張圖上，讓解讀可以從差異開始。</p>
+      </div>
+
+      <div class="chart-layout">
+        <figure class="chart-frame">
+          <a href="../chart.html" aria-label="開啟完整互動分析圖">
+            <img src="assets/nets-analysis.png" alt="江昱德的 NETS 人際風格與特質分析圖，包含本我、他我與策略位置">
+          </a>
+          <figcaption class="chart-caption">江昱德個人案例｜底圖編製：林金根｜NETS 繪製與口述解析：陳明勇 Vincent｜點圖可開啟完整互動版</figcaption>
+        </figure>
+
+        <div class="read-list">
+          <article class="read-item">
+            <strong>本我</strong>
+            <p>相對接近內在的特質傾向，提供一個理解自己慣用反應方式的起點。</p>
+          </article>
+          <article class="read-item">
+            <strong>他我</strong>
+            <p>進入群體、工作與社會情境後，別人實際看見的行為展現。</p>
+          </article>
+          <article class="read-item">
+            <strong>策略位置</strong>
+            <p>在目前工作特性與情境要求下，實際採取的行動位置與發力方向。</p>
+          </article>
+          <a class="btn secondary" href="../chart.html">開啟完整互動分析圖</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-wide warm" id="value">
+      <section class="section">
+        <div class="section-head center">
+          <p class="eyebrow">From insight to action</p>
+          <h2>從評測框架走進企業應用</h2>
+          <p class="section-intro">圖像提供共同語言，因人領導力承接後續應用，讓個人、主管與團隊能以具體方式處理差異。</p>
+        </div>
+
+        <div class="value-grid">
+          <article class="card value-card personal">
+            <span class="card-index">PERSONAL</span>
+            <h3>個人發展</h3>
+            <p>了解慣用行為風格、優勢、壓力來源與目前工作適性，思考哪些特質可以善用，哪些地方需要調整。</p>
+            <ul>
+              <li>自我理解與壓力調適</li>
+              <li>職涯與工作適性參考</li>
+              <li>溝通與時間管理學習</li>
+            </ul>
+          </article>
+          <article class="card value-card relation">
+            <span class="card-index">RELATION</span>
+            <h3>因人領導力</h3>
+            <p>看見彼此的行為偏好後，主管能依人、依任務與依階段調整帶領、回饋、授權與培訓方式。</p>
+            <ul>
+              <li>因人調整溝通方式</li>
+              <li>指示、支持與授權拿捏</li>
+              <li>績效輔導與發展對話</li>
+            </ul>
+          </article>
+          <article class="card value-card team">
+            <span class="card-index">TEAM SCAN</span>
+            <h3>團隊與組織</h3>
+            <p>將多位成員的圖放在一起，觀察團隊組合、互補位置、互動壓力與可能缺口，支持後續分工與團隊發展。</p>
+            <ul>
+              <li>人才盤點與任務分工</li>
+              <li>團隊溝通與領導</li>
+              <li>組織氣氛與訓練需求</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <section class="section" id="prototype">
+      <div class="section-head">
+        <p class="eyebrow">Working prototypes</p>
+        <h2>把既有內容做成可以體驗的原型</h2>
+        <p class="section-intro">個人測試、分析圖與團隊模擬都予以保留。這些原型呈現 NETS 的框架層；進入企業後，再由因人領導力把結果轉成主管帶人與團隊發展的方法。</p>
+      </div>
+
+      <div class="prototype-grid">
+        <article class="card prototype-card">
+          <span class="icon">01</span>
+          <h3>個人測試體驗</h3>
+          <p>從情境與行為題目開始，讓受測者用直覺回應，完成後進入個人風格結果與說明。</p>
+          <a class="card-link" href="../demo.html">開啟個人測試 Demo →</a>
+        </article>
+        <article class="card prototype-card">
+          <span class="icon">02</span>
+          <h3>完整互動分析圖</h3>
+          <p>逐層查看本我、他我、策略位置與 N、E、S、T 四向度，理解每個數值與變化所代表的行為展現。</p>
+          <a class="card-link" href="../chart.html">開啟互動分析圖 →</a>
+        </article>
+        <article class="card prototype-card">
+          <span class="icon">03</span>
+          <h3>Team Scan 團隊模擬</h3>
+          <p>將多人的特質圖疊合，練習觀察自然分工、互補位置、摩擦點與不同情境下的合作方式。</p>
+          <a class="card-link" href="../team.html">開啟團隊模擬 →</a>
+        </article>
+      </div>
+      <p class="prototype-note">以上為既有功能原型，供內容討論與體驗。NETS 負責看見差異，因人領導力負責企業應用，兩者共同構成文森的完整方法。</p>
+    </section>
+
+    <div class="section-wide paper" id="vision">
+      <section class="section vision">
+        <div class="vision-statement">
+          <span class="quote-mark">“</span>
+          <blockquote>把 NETS 框架與因人領導力企業應用，做成可以持續運作、持續帶來收入的退休資產。</blockquote>
+          <p>這是文森對下一階段最直接的期待。重點在於把已經存在的評測、解析、帶人方法、團隊應用與課程經驗整理成可重複交付的專業服務。</p>
+        </div>
+
+        <div>
+          <p class="eyebrow">Vincent's retirement vision</p>
+          <h2>收入來自框架與應用的產品化</h2>
+          <p class="section-intro">NETS 提供評測、報告與 Team Scan，因人領導力承接主管培訓與企業導入。下一步是讓這些服務各自有清楚的入口、內容與交付方式。</p>
+
+          <div class="income-grid" style="margin-top: 34px;">
+            <article class="card income-card">
+              <span class="income-number">01</span>
+              <div><h3>個人測評與報告</h3><p>完成線上施測後，取得個人特質與人際風格分析圖與說明。</p></div>
+            </article>
+            <article class="card income-card">
+              <span class="income-number">02</span>
+              <div><h3>文森專業解析</h3><p>由 Vincent 針對個人工作情境、壓力來源與發展方向提供進一步解讀。</p></div>
+            </article>
+            <article class="card income-card">
+              <span class="income-number">03</span>
+              <div><h3>Team Scan 團隊專案</h3><p>將個人結果整合為團隊圖，進入溝通、分工、領導與團隊發展的專案服務。</p></div>
+            </article>
+            <article class="card income-card">
+              <span class="income-number">04</span>
+              <div><h3>因人領導力企業導入</h3><p>把 NETS 結果轉成主管的溝通、分工、授權、回饋與績效輔導方法，應用於真實帶人情境。</p></div>
+            </article>
+            <article class="card income-card">
+              <span class="income-number">05</span>
+              <div><h3>客製系列課程</h3><p>依組織需求延伸到溝通協商、團隊領導、績效輔導、時間管理與服務應用。</p></div>
+            </article>
+            <article class="card income-card">
+              <span class="income-number">06</span>
+              <div><h3>組織專案授權</h3><p>依專案期間提供評測系統與相關內容授權，搭配保密、施測與交付規範。</p></div>
+            </article>
+          </div>
+
+          <p class="history-note">歷史資料記錄：2018 年 NETS 系列課程簡介已記載超過 3,000 名受測經驗。此數字只作為當時累積成果，不代替目前最新統計。</p>
+        </div>
+      </section>
+    </div>
+
+    <section class="section" id="boundary">
+      <div class="boundary-grid">
+        <div>
+          <p class="eyebrow">Professional boundary</p>
+          <h2>工具提供視角，專業解讀保留人的判斷</h2>
+          <p class="section-intro">NETS 用來支持理解、對話與發展。它不代替完整的人才判斷，也不把任何一種風格當成高低排名。</p>
+        </div>
+        <div class="boundary-list">
+          <div class="boundary-item"><span>✓</span><p>結果呈現行為傾向與情境下的展現，解讀時保留脈絡。</p></div>
+          <div class="boundary-item"><span>✓</span><p>團隊應用關注互補、溝通與發展，不拿單一分數決定人的價值。</p></div>
+          <div class="boundary-item"><span>✓</span><p>重要的職涯、任用與組織決策，仍需要專業人士與當事人共同判斷。</p></div>
+          <div class="boundary-item"><span>✓</span><p>評測資料、解析內容與圖像的權利及使用範圍，需要清楚約定。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compact">
+      <div class="final-cta">
+        <p class="eyebrow">Start with one real map</p>
+        <h2>先用 NETS 看見差異，再用因人領導力找到帶法</h2>
+        <p>從一張真實分析圖開始，看見本我、他我與工作情境的差異，再把理解帶進主管培訓、Team Scan 與企業人才發展。</p>
+        <div class="actions">
+          <a class="btn" href="../chart.html">看完整互動分析圖</a>
+          <a class="btn secondary" href="../index.html">切換到江江＋文森提案版</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p>本頁依 2006、2009 年 NETS 簡介、2018 年 NETS 系列課程簡介與 Vincent 2026 年 NETS、因人領導力口述內容整理。NETS 測驗題目、底圖、解析內容與相關智慧財產權利歸原權利人所有。本頁為校稿版，暫不供搜尋引擎收錄。</p>
+      <div class="footer-links">
+        <a href="#top">回頁首</a>
+        <a href="../index.html">共同提案版</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navToggle = document.querySelector('.nav-toggle');
+    const mainNav = document.querySelector('.main-nav');
+    if (navToggle && mainNav) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = navToggle.classList.toggle('open');
+        mainNav.classList.toggle('open', isOpen);
+        navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+      mainNav.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          navToggle.classList.remove('open');
+          mainNav.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  </script>
+</body>
+</html>
