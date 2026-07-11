@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <title>NETS 政府案路徑｜文森 × 江江共創概念</title>
+  <style>
+    :root {
+      --paper: #f7f1e7;
+      --paper-2: #fffaf2;
+      --paper-3: #ece1d1;
+      --ink: #30261f;
+      --muted: #74685c;
+      --line: rgba(91, 72, 51, 0.2);
+      --green: #3f7557;
+      --green-soft: #e5eee7;
+      --brown: #6d4432;
+      --brown-soft: #efe2d8;
+      --gold: #c48a43;
+      --gold-soft: #f3e2c8;
+      --dark: #352118;
+      --dark-card: #4a2c1f;
+      --cream: #fff8dc;
+      --danger: #9d4b43;
+      --danger-soft: #f3dfdc;
+      --shadow: 0 18px 52px rgba(70, 50, 30, 0.11);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 10%, rgba(63, 117, 87, 0.1), transparent 30rem),
+        radial-gradient(circle at 92% 38%, rgba(196, 138, 67, 0.11), transparent 30rem),
+        var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      font-size: 17px;
+      line-height: 1.78;
+    }
+
+    a { color: inherit; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--line);
+      background: rgba(247, 241, 231, 0.93);
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar-inner {
+      width: min(1120px, calc(100% - 40px));
+      min-height: 68px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .brand {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 10px;
+      white-space: nowrap;
+    }
+
+    .brand strong {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.45rem;
+      letter-spacing: 0.08em;
+    }
+
+    .brand span { color: var(--muted); font-size: 0.78rem; }
+    nav { margin-left: auto; display: flex; gap: 18px; align-items: center; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.84rem; }
+    nav a:hover { color: var(--brown); }
+    nav .back { color: var(--brown); font-weight: 700; }
+
+    .nav-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      margin-left: auto;
+      padding: 8px;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 21px;
+      height: 2px;
+      margin: 4px auto;
+      border-radius: 99px;
+      background: var(--ink);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    main { overflow: hidden; }
+    .section {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 92px 0;
+    }
+
+    .hero { padding-top: 104px; padding-bottom: 78px; }
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--gold);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 { font-family: "Noto Serif TC", "Songti TC", serif; }
+    h1 {
+      max-width: 920px;
+      margin: 0;
+      font-size: clamp(2.55rem, 6.3vw, 5.6rem);
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+    }
+
+    h1 em { color: var(--green); font-style: normal; }
+    .hero-lead {
+      max-width: 760px;
+      margin: 26px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.06rem, 2vw, 1.28rem);
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 10px 18px;
+      border: 1px solid var(--brown);
+      border-radius: 999px;
+      color: #fffaf2;
+      background: var(--brown);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(109, 68, 50, 0.18); }
+    .btn.secondary { color: var(--brown); background: transparent; }
+
+    .status-line {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      align-items: center;
+      margin-top: 42px;
+      padding: 22px 24px;
+      border: 1px solid rgba(196, 138, 67, 0.45);
+      border-radius: 18px;
+      background: rgba(255, 250, 242, 0.74);
+    }
+
+    .status-tag {
+      padding: 5px 11px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--gold);
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    .status-line p { margin: 0; color: var(--muted); }
+    .status-line strong { color: var(--ink); }
+
+    .dark-band { color: var(--cream); background: var(--dark); }
+    .dark-band .section { padding-top: 78px; padding-bottom: 78px; }
+    .translation {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .translation-card {
+      padding: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius);
+      background: var(--dark-card);
+    }
+
+    .translation-card .mini { color: #d6ae79; font-size: 0.74rem; letter-spacing: 0.12em; font-weight: 800; }
+    .translation-card h2 { margin: 8px 0 12px; font-size: clamp(1.55rem, 3vw, 2.2rem); line-height: 1.25; }
+    .translation-card p { margin: 0; color: rgba(255, 248, 220, 0.72); }
+    .translation-arrow { display: grid; place-items: center; color: var(--gold); font-size: 2rem; }
+
+    .section-head { max-width: 760px; margin-bottom: 36px; }
+    .section-head h2 { margin: 0; font-size: clamp(2rem, 4.2vw, 3.4rem); line-height: 1.2; letter-spacing: -0.035em; }
+    .section-head p { margin: 16px 0 0; color: var(--muted); }
+
+    .people-grid, .route-grid, .gate-grid, .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .person-card, .gate-card, .evidence-card {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 250, 242, 0.78);
+      box-shadow: var(--shadow);
+    }
+
+    .person-card.vincent { border-top: 5px solid var(--green); }
+    .person-card.jiang { border-top: 5px solid var(--brown); }
+    .person-card .who { color: var(--muted); font-size: 0.74rem; letter-spacing: 0.12em; font-weight: 800; }
+    .person-card h3 { margin: 8px 0 14px; font-size: 1.55rem; }
+    .person-card ul, .route-card ul, .gate-card ul { margin: 0; padding-left: 1.2em; }
+    .person-card li, .route-card li, .gate-card li { margin: 8px 0; }
+
+    .joint-output {
+      margin-top: 22px;
+      padding: 30px;
+      border-radius: var(--radius);
+      color: var(--cream);
+      background: linear-gradient(135deg, #4a2c1f, #2e211b);
+    }
+
+    .joint-output h3 { margin: 0 0 12px; color: #edc68f; font-size: 1.55rem; }
+    .joint-output p { margin: 0; color: rgba(255, 248, 220, 0.78); }
+
+    .chain {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .chain-step {
+      position: relative;
+      min-height: 120px;
+      padding: 18px 15px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .chain-step b { display: block; color: #edc68f; font-size: 0.79rem; margin-bottom: 6px; }
+    .chain-step span { display: block; font-size: 0.88rem; line-height: 1.5; }
+
+    .language-table { display: grid; gap: 10px; }
+    .language-row {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) 42px minmax(0, 1.35fr);
+      align-items: center;
+      gap: 12px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--paper-2);
+    }
+
+    .language-row .old { color: var(--muted); }
+    .language-row .arrow { color: var(--gold); font-size: 1.25rem; text-align: center; }
+    .language-row .new { color: var(--brown); font-weight: 700; }
+
+    .routes-section { background: rgba(236, 225, 209, 0.55); }
+    .route-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .route-card {
+      min-width: 0;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--paper-2);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .route-card.primary { border-top: 6px solid var(--green); }
+    .route-card.prepare { border-top: 6px solid var(--gold); }
+    .route-card.stop { border-top: 6px solid var(--danger); }
+    .route-status {
+      width: fit-content;
+      margin-bottom: 14px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .primary .route-status { color: var(--green); background: var(--green-soft); }
+    .prepare .route-status { color: #8a5a1f; background: var(--gold-soft); }
+    .stop .route-status { color: var(--danger); background: var(--danger-soft); }
+    .route-card h3 { margin: 0; font-size: 1.55rem; line-height: 1.3; }
+    .route-card .route-lead { margin: 12px 0; color: var(--muted); }
+    .route-title {
+      margin: 14px 0;
+      padding: 14px;
+      border-radius: 13px;
+      background: var(--paper-3);
+      font-size: 0.9rem;
+      font-weight: 700;
+      line-height: 1.55;
+    }
+
+    .route-facts { margin-top: auto; padding-top: 18px; color: var(--muted); font-size: 0.82rem; }
+    .route-facts a { color: var(--brown); text-underline-offset: 3px; }
+
+    .decision-callout {
+      margin-top: 26px;
+      padding: 26px 28px;
+      border-left: 5px solid var(--danger);
+      border-radius: 18px;
+      color: var(--ink);
+      background: var(--danger-soft);
+    }
+
+    .decision-callout h3 { margin: 0 0 8px; color: var(--danger); }
+    .decision-callout p { margin: 0; }
+
+    .gate-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .gate-card { box-shadow: none; }
+    .gate-no {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      margin-bottom: 14px;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--brown);
+      font-family: Georgia, serif;
+      font-weight: 700;
+    }
+
+    .gate-card h3 { margin: 0 0 10px; font-size: 1.2rem; }
+    .gate-card p { margin: 0; color: var(--muted); font-size: 0.91rem; }
+
+    .roadmap { display: grid; gap: 18px; }
+    .roadmap-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 24px;
+      align-items: start;
+      padding: 26px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .roadmap-time { color: var(--green); font-family: Georgia, serif; font-size: 1.35rem; font-weight: 700; }
+    .roadmap-row h3 { margin: 0 0 8px; font-size: 1.3rem; }
+    .roadmap-row p { margin: 0; color: var(--muted); }
+
+    .evidence-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .evidence-card { box-shadow: none; }
+    .evidence-card strong { color: var(--brown); }
+    .evidence-card p { margin: 8px 0 0; color: var(--muted); font-size: 0.9rem; }
+
+    .final-card {
+      padding: 38px;
+      border-radius: 26px;
+      color: var(--cream);
+      background: var(--dark);
+      box-shadow: var(--shadow);
+    }
+
+    .final-card h2 { margin: 0 0 14px; color: #edc68f; font-size: clamp(1.8rem, 4vw, 3rem); }
+    .final-card p { margin: 0; color: rgba(255, 248, 220, 0.78); }
+    .final-card .question {
+      margin-top: 22px;
+      padding: 20px;
+      border: 1px solid rgba(237, 198, 143, 0.35);
+      border-radius: 16px;
+      color: #fff8dc;
+      background: rgba(255, 255, 255, 0.055);
+      font-weight: 700;
+    }
+
+    footer {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 30px 0 40px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    footer p { margin: 4px 0; }
+    footer a { text-underline-offset: 3px; }
+
+    @media (max-width: 920px) {
+      .route-grid { grid-template-columns: 1fr; }
+      .gate-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .chain { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .evidence-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 820px) {
+      .topbar-inner { flex-wrap: wrap; min-height: 58px; padding: 8px 0; gap: 8px; }
+      .brand { flex: 1; }
+      .brand span { display: none; }
+      .nav-toggle { display: block; }
+      nav {
+        width: 100%;
+        max-height: 0;
+        margin-left: 0;
+        overflow: hidden;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        transition: max-height 0.25s ease;
+      }
+      nav.open { max-height: 420px; padding-top: 4px; border-top: 1px solid var(--line); }
+      nav a { display: block; padding: 10px 4px; border-bottom: 1px solid var(--line); }
+      nav a:last-child { border-bottom: 0; }
+      .translation { grid-template-columns: 1fr; }
+      .translation-arrow { transform: rotate(90deg); }
+      .people-grid { grid-template-columns: 1fr; }
+      .language-row { grid-template-columns: 1fr; gap: 6px; }
+      .language-row .arrow { transform: rotate(90deg); }
+      .roadmap-row { grid-template-columns: 1fr; gap: 8px; }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 16px; }
+      .topbar-inner, .section, footer { width: min(100% - 28px, 1120px); }
+      .section { padding: 66px 0; }
+      .hero { padding-top: 72px; }
+      .status-line { grid-template-columns: 1fr; gap: 10px; }
+      .gate-grid, .chain { grid-template-columns: 1fr; }
+      .person-card, .route-card, .gate-card, .evidence-card { padding: 23px 20px; }
+      .final-card { padding: 28px 22px; }
+      .hero-actions .btn { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html"><strong>NETS</strong><span>文森 × 江江共創計畫</span></a>
+      <button class="nav-toggle" aria-label="開啟選單" aria-expanded="false"><span></span><span></span><span></span></button>
+      <nav aria-label="頁面導覽">
+        <a class="back" href="joint.html">共創版</a>
+        <a href="#integration">整合架構</a>
+        <a href="#routes">政府案路徑</a>
+        <a href="#gates">申請閘門</a>
+        <a href="#roadmap">90 天準備</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section hero" id="top">
+      <p class="eyebrow">Government Grant Path · Updated 2026-07-10</p>
+      <h1>把兩人的概念，整成<em>政府案看得懂</em>的研發計畫</h1>
+      <p class="hero-lead">文森帶來 NETS、人際風格判讀與因人領導力；江江帶來 AI 知識結構、可溯源生成、團隊分工與執行管線。這一頁把共同成果翻成申請標的、證據缺口與三條政府案路徑。</p>
+      <div class="hero-actions">
+        <a class="btn" href="#routes">看三條申請路徑</a>
+        <a class="btn secondary" href="joint.html">回江江＋文森共創版</a>
+      </div>
+      <div class="status-line">
+        <span class="status-tag">目前判斷</span>
+        <p><strong>中央 SBIR Phase 1 是條件式第一順位。</strong>先完成 IP、申請主體、自籌與計分證據四個閘門；SIIR 累積下一年度的市場證據；NETS 本輪不併入 7/24 既有主案。</p>
+      </div>
+    </section>
+
+    <div class="dark-band">
+      <section class="section">
+        <div class="translation">
+          <article class="translation-card">
+            <span class="mini">既有研究與服務基礎</span>
+            <h2>NETS 測評、文字庫與 Vincent 的判讀經驗</h2>
+            <p>這些是合法授權後可使用的研究基礎，也是二十年實務累積。</p>
+          </article>
+          <div class="translation-arrow" aria-hidden="true">→</div>
+          <article class="translation-card">
+            <span class="mini">本次新研發標的</span>
+            <h2>可溯源的協作決策與因人任務配置引擎</h2>
+            <p>新研發聚焦情境化推薦、來源溯源、專家一致性驗證與執行結果回流。</p>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <section class="section" id="integration">
+      <div class="section-head">
+        <p class="eyebrow">01 · The Integration</p>
+        <h2>各自的資產保留，整合在同一條工作鏈</h2>
+        <p>這個產品的價值來自兩套專業接起來：先看見人的行為風格，再把理解轉成團隊真的能執行的分工與領導方式。</p>
+      </div>
+
+      <div class="people-grid">
+        <article class="person-card vincent">
+          <span class="who">VINCENT 提供</span>
+          <h3>人與領導的專業核心</h3>
+          <ul>
+            <li>NETS 人際風格特質與正式測評</li>
+            <li>二十年解析文字、案例與企業實務</li>
+            <li>Team Scan 團隊互動判讀</li>
+            <li>因人領導力的 G 階段與 L 回應</li>
+            <li>專家覆核與可說出口的管理話術</li>
+          </ul>
+        </article>
+        <article class="person-card jiang">
+          <span class="who">江江提供</span>
+          <h3>AI 與執行的產品管線</h3>
+          <ul>
+            <li>解析文字庫結構化與版本治理</li>
+            <li>規則庫先行、AI 組稿與來源溯源</li>
+            <li>團隊成本矩陣與 ARCI 權責分工</li>
+            <li>OGSM、甘特與 SROI 的管理接軌</li>
+            <li>結果回流成下次合作與帶人依據</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="joint-output">
+        <h3>共同產品：AI 因人協作開工系統</h3>
+        <p>輸入正式測評、任務內容與團隊脈絡，產出合作說明書、任務成本矩陣、ARCI 建議、主管話術與追蹤指標；重要結果由 Vincent 或受訓專業者覆核。</p>
+        <div class="chain" aria-label="共同產品工作鏈">
+          <div class="chain-step"><b>01</b><span>看見我的人際風格</span></div>
+          <div class="chain-step"><b>02</b><span>理解與誰合作及摩擦點</span></div>
+          <div class="chain-step"><b>03</b><span>計算任務對每人的成本</span></div>
+          <div class="chain-step"><b>04</b><span>產出 ARCI 分工建議</span></div>
+          <div class="chain-step"><b>05</b><span>依成長階段調整帶法</span></div>
+          <div class="chain-step"><b>06</b><span>執行結果回流再修正</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="language">
+      <div class="section-head">
+        <p class="eyebrow">02 · Grant Language</p>
+        <h2>同一件事，換成可驗收的政府案語言</h2>
+        <p>測評數位化可以是基礎工程；政府案的核心要落在尚未完成的新研發、驗證方法與產業價值。</p>
+      </div>
+      <div class="language-table">
+        <div class="language-row"><span class="old">把舊 Excel 搬到網頁</span><span class="arrow">→</span><span class="new">還原計分邏輯並建立可重現的驗收基準</span></div>
+        <div class="language-row"><span class="old">AI 自動寫測評報告</span><span class="arrow">→</span><span class="new">規則庫約束、來源溯源與專家一致性驗證</span></div>
+        <div class="language-row"><span class="old">幫人貼類型標籤</span><span class="arrow">→</span><span class="new">提供發展、溝通與任務配置的決策參考</span></div>
+        <div class="language-row"><span class="old">一次做成大型人資平台</span><span class="arrow">→</span><span class="new">先驗證單一場景：專案團隊開工與主管帶人</span></div>
+        <div class="language-row"><span class="old">宣稱 AI 很準</span><span class="arrow">→</span><span class="new">量測 AI 與專家判讀差異、修正率與使用結果</span></div>
+      </div>
+    </section>
+
+    <div class="routes-section" id="routes">
+      <section class="section">
+        <div class="section-head">
+          <p class="eyebrow">03 · Three Routes</p>
+          <h2>三條路徑，各自申請不同的東西</h2>
+          <p>以下是截至 2026 年 7 月 10 日的判斷。送件前仍須回官方最新公告複核。</p>
+        </div>
+
+        <div class="route-grid">
+          <article class="route-card primary">
+            <span class="route-status">條件式第一順位</span>
+            <h3>中央 SBIR Phase 1</h3>
+            <p class="route-lead">用六個月先期研究驗證新決策引擎能否成立，適合目前仍需補公式、規則與一致性證據的階段。</p>
+            <div class="route-title">建議題目：可溯源人際風格解析與因人任務配置決策引擎之先期研究</div>
+            <ul>
+              <li>計分公式與題目映射還原</li>
+              <li>解析知識庫與版本溯源</li>
+              <li>風格、任務與成長階段推薦邏輯</li>
+              <li>AI 與 Vincent 專家判讀一致性研究</li>
+              <li>真實團隊小規模可行性測試</li>
+            </ul>
+            <p class="route-facts">官方重點：Phase 1 六個月，每案補助上限 150 萬元，採隨到隨受理；補助款不得超過總經費 50%。<br><a href="https://sbir.org.tw/download/downloadarea/115%E5%B9%B4SBIR%E7%94%B3%E8%AB%8B%E9%A0%88%E7%9F%A5HK345L.pdf" target="_blank" rel="noopener">查看 115 年 SBIR 申請須知</a></p>
+          </article>
+
+          <article class="route-card prepare">
+            <span class="route-status">下一年度證據線</span>
+            <h3>SIIR 服務業創新</h3>
+            <p class="route-lead">把共同產品做成企業可購買、可複製交付、能追蹤成果的智慧服務模式。</p>
+            <div class="route-title">建議題目：中小企業團隊智慧協作開工服務模式</div>
+            <ul>
+              <li>企業診斷日與 Team Scan 2.0</li>
+              <li>測評到分工、帶人與 30 日追蹤</li>
+              <li>標準服務 SOP 與定價模式</li>
+              <li>真人付費、續用與導入成效證據</li>
+              <li>未來講師認證與服務授權</li>
+            </ul>
+            <p class="route-facts">官方現況：115 年度經費已用罄，不受理第二梯次。116 年規則與受理時間尚未公告。<br><a href="https://gcis.nat.gov.tw/neo-s/Web/News_Content.aspx?p=7c09e1ce-b518-4b62-ad45-e04f5d3b09e4" target="_blank" rel="noopener">查看 SIIR 第二梯次公告</a></p>
+          </article>
+
+          <article class="route-card stop">
+            <span class="route-status">NETS 本輪不送</span>
+            <h3>7/24 AI 創新應用</h3>
+            <p class="route-lead">案型要求單一場景、產品化與快速導入，但 NETS 目前仍有 IP、主體、公式、場域與 KPI 證據缺口。</p>
+            <div class="route-title">若未來重整：中小企業專案團隊 AI 協作啟動服務</div>
+            <ul>
+              <li>本輪不取代已成形的 AI 報告治理主案</li>
+              <li>不併入主案當次要案例</li>
+              <li>避免新增心理測評、個資與效度攻擊面</li>
+              <li>先在 SBIR 或真人服務試點補證據</li>
+            </ul>
+            <p class="route-facts">官方重點：截止 2026 年 7 月 24 日 16:59:59，申請主體限 J582、J62 或 J63。<br><a href="https://web.moda.gov.tw/ADI/news/events/772" target="_blank" rel="noopener">查看數產署徵案公告</a></p>
+          </article>
+        </div>
+
+        <div class="decision-callout">
+          <h3>目前的收斂</h3>
+          <p>NETS 先走 SBIR Phase 1 的新研發驗證；SIIR 用接下來半年的企業服務證據準備；7/24 維持原本 AI 報告治理主案，不加入 NETS。</p>
+        </div>
+      </section>
+    </div>
+
+    <section class="section" id="gates">
+      <div class="section-head">
+        <p class="eyebrow">04 · Phase Zero</p>
+        <h2>四個閘門沒過，先不寫正式申請書</h2>
+        <p>這四項決定計畫有沒有申請資格、合法研究基礎與可驗收起點。</p>
+      </div>
+
+      <div class="gate-grid">
+        <article class="gate-card"><span class="gate-no">1</span><h3>IP 與授權</h3><p>確認 NETS 權利歸屬，以及誰能授權數位化、商業化與新研發成果。</p></article>
+        <article class="gate-card"><span class="gate-no">2</span><h3>申請主體與自籌</h3><p>確認使用哪間中小企業申請、計畫人員關係、實收資本額與自籌能力。</p></article>
+        <article class="gate-card"><span class="gate-no">3</span><h3>計分驗收基準</h3><p>完成題目映射、公式還原及既有樣本比對，建立新舊結果一致的證據。</p></article>
+        <article class="gate-card"><span class="gate-no">4</span><h3>個資與資料治理</h3><p>舊資料先去識別化，明確定義同意、撤回、保存、刪除與使用範圍。</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="roadmap">
+      <div class="section-head">
+        <p class="eyebrow">05 · Preparation Roadmap</p>
+        <h2>先做 90 天準備，再決定送件日</h2>
+        <p>送件日期不先寫死。每一段都有客觀成果，四個前置閘門通過後才進 Phase 1 正式簡報。</p>
+      </div>
+
+      <div class="roadmap">
+        <article class="roadmap-row"><span class="roadmap-time">0–30 天</span><div><h3>確認能不能申請</h3><p>完成 IP 授權與合作模式、申請主體與自籌盤點；用現有人工服務完成一場企業診斷，留下分工時間、修改過程與 before 基準。</p></div></article>
+        <article class="roadmap-row"><span class="roadmap-time">31–60 天</span><div><h3>建立研究基準</h3><p>還原題目映射與計分公式；由 Vincent 對一批案例留下人工判讀，定義 AI 與專家一致性、修正率和可接受差異。</p></div></article>
+        <article class="roadmap-row"><span class="roadmap-time">61–90 天</span><div><h3>形成 SBIR Phase 1 簡報</h3><p>鎖定單一場景、研究問題、方法、查核點、人力與經費。若前置閘門仍有缺口，保留研究材料，不急著送件。</p></div></article>
+      </div>
+    </section>
+
+    <section class="section" id="evidence">
+      <div class="section-head">
+        <p class="eyebrow">06 · Evidence Package</p>
+        <h2>政府案最後看的，是能被查核的證據</h2>
+      </div>
+      <div class="evidence-grid">
+        <article class="evidence-card"><strong>權利證據</strong><p>授權書、合作協議、成果與品牌歸屬。</p></article>
+        <article class="evidence-card"><strong>技術證據</strong><p>題目映射、公式對照、測試樣本與版本紀錄。</p></article>
+        <article class="evidence-card"><strong>專家證據</strong><p>Vincent 判讀基準、修正紀錄與一致性評量。</p></article>
+        <article class="evidence-card"><strong>市場證據</strong><p>付費服務、場域意向、真人訪談與續用訊號。</p></article>
+        <article class="evidence-card"><strong>效益證據</strong><p>報告工時、分工耗時、修改率與實際採用情形。</p></article>
+        <article class="evidence-card"><strong>治理證據</strong><p>同意、撤回、人工覆核、資料保存與去識別化。</p></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="final-card">
+        <p class="eyebrow">The First Decision</p>
+        <h2>第一題先問權利，再問補助。</h2>
+        <p>NETS 可以成為新研發的合法基礎，前提是權利邊界寫清楚。這會決定申請公司能使用哪些題目、文字、資料與專家方法，也會決定新的 AI 研發成果屬於誰。</p>
+        <div class="question">NETS 的權利屬於誰？誰可以授權申請公司把它數位化、商業化，並在此基礎上產生新的研發成果？</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>NETS 人際風格特質與因人領導力：陳明勇 Vincent｜AI 產品與政府案架構：江昱德</p>
+    <p>本頁為內部討論用，未做搜尋引擎收錄。補助資格、金額與期限以各計畫最新官方公告為準。</p>
+  </footer>
+
+  <script>
+    const navToggle = document.querySelector('.nav-toggle');
+    const topbarNav = document.querySelector('.topbar nav');
+    if (navToggle && topbarNav) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = navToggle.classList.toggle('open');
+        topbarNav.classList.toggle('open', isOpen);
+        navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+      topbarNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          navToggle.classList.remove('open');
+          topbarNav.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  </script>
+</body>
+</html>

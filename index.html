@@ -17,6 +17,8 @@
       --vincent-soft: #e5eee7;
       --joint: #6d4432;
       --joint-soft: #efe2d8;
+      --funding: #9a642d;
+      --funding-soft: #f3e2c8;
       --white: #fffdf8;
       --shadow: 0 22px 60px rgba(70, 50, 30, 0.12);
     }
@@ -273,6 +275,24 @@
       background: rgba(255, 253, 248, 0.58);
     }
 
+    .funding-card {
+      margin-top: 26px;
+      padding: 28px 30px;
+      border: 1px solid rgba(154, 100, 45, 0.28);
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(255, 253, 248, 0.9), var(--funding-soft));
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .funding-card .label { color: var(--funding); background: rgba(154, 100, 45, 0.11); }
+    .funding-card h2 { font-size: clamp(1.55rem, 3vw, 2.1rem); }
+    .funding-card p { max-width: 760px; margin: 12px 0 0; color: var(--muted); }
+    .funding-card .enter { min-width: 230px; color: white; background: var(--funding); box-shadow: 0 10px 24px rgba(154, 100, 45, 0.18); }
+
     footer {
       width: min(1160px, calc(100% - 40px));
       margin: 0 auto;
@@ -287,6 +307,8 @@
       .versions { grid-template-columns: 1fr; }
       .version-card { min-height: 0; }
       .visual { height: 250px; }
+      .funding-card { grid-template-columns: 1fr; }
+      .funding-card .enter { min-width: 0; }
     }
 
     @media (max-width: 560px) {
@@ -366,6 +388,15 @@
         </div>
       </article>
     </section>
+
+    <aside class="funding-card" aria-label="NETS 政府案路徑">
+      <div>
+        <span class="label">GOVERNMENT GRANT PATH</span>
+        <h2>把江江＋文森共創版，翻成政府案的研發語言</h2>
+        <p>整理共同產品架構、SBIR／SIIR／7-24 三條路徑、申請前四個閘門，以及 90 天證據準備計畫。</p>
+      </div>
+      <a class="enter" href="funding.html"><span>進入政府案路徑</span><span aria-hidden="true">→</span></a>
+    </aside>
 
     <p class="note">兩份版本共用既有的互動測驗、完整分析圖與團隊模擬。版本入口只整理閱讀動線，不刪除任何一份內容。</p>
   </main>
